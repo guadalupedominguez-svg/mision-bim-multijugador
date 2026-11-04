@@ -71,8 +71,8 @@ function render(){
   if(state.finished){$('scenario').innerHTML=finishedView();$('again').onclick=newGame;return;}
   const m=state.mission;
   const lastDecision=state.history.at(-1);
-  const caseNote=['gol','yardas','pista'].includes(state.avatar.id)?'<p class="hint">Misión: remodelar el estadio y cumplir la fecha contractual de entrega.</p>':'';
-  $('scenario').innerHTML=`${lastDecision?`<div class="mission-feedback"><span class="eyebrow">LO QUE PASÓ EN LA OBRA</span><p>${esc(lastDecision.effect)}</p><small>${esc(lastDecision.build)}</small></div>`:''}<span class="eyebrow">MISIÓN ${state.history.length+1} DE ${state.total}${m.phase?` · ${esc(m.phase)}`:''}</span><h2>${esc(m.title)}</h2>${caseNote}<p>${esc(m.prompt)}</p><p class="hint">No hay respuestas incorrectas. Cada opción construye el proyecto de una forma distinta.</p>${m.options.map((o,i)=>`<button class="option" data-choice="${i}"><span class="option-key">${'ABC'[i]||i+1}</span>${esc(o)}</button>`).join('')}`;
+  const caseNote=['gol','yardas','pista'].includes(state.avatar.id)?'':'';
+  $('scenario').innerHTML=`${lastDecision?`<div class="mission-feedback"><span class="eyebrow">LO QUE PASÓ EN LA OBRA</span><p>${esc(lastDecision.effect)}</p><small>${esc(lastDecision.build)}</small></div>`:''}<span class="eyebrow">MISIÓN ${state.history.length+1} DE ${state.total}${m.phase?` · ${esc(m.phase)}`:''}</span><h2>${esc(m.title)}</h2>${caseNote}<p>${esc(m.prompt)}</p><p class="hint">Sin respuestas incorrectas: cada opción construye distinto.</p>${m.options.map((o,i)=>`<button class="option" data-choice="${i}"><span class="option-key">${'ABC'[i]||i+1}</span>${esc(o)}</button>`).join('')}`;
   document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>answer(Number(b.dataset.choice)));
 }
 async function answer(choice){
