@@ -202,7 +202,7 @@ function render(){
   side.classList.toggle('result',state.finished);side.classList.toggle('empty',!state.finished&&!state.history.length);
   if(state.finished){$('scenario').innerHTML=finishedView();$('again').onclick=newGame;return;}
   const m=state.mission;
-  $('scenario').innerHTML=`<span class="eyebrow">MISIÓN ${state.history.length+1} DE ${state.total}${m.phase?` · ${esc(m.phase)}`:''}</span><h2>${esc(m.title)}</h2><p class="prompt">${esc(m.prompt)}</p><p class="hint">Sin respuestas incorrectas: cada opción construye distinto.</p>${m.options.map((o,i)=>`<button class="option" data-choice="${i}"><span class="option-key">${'ABC'[i]||i+1}</span>${esc(o)}</button>`).join('')}`;
+  $('scenario').innerHTML=`<span class="eyebrow">MISIÓN ${state.history.length+1} DE ${state.total}${m.phase?` · ${esc(m.phase)}`:''}</span><h2>${esc(m.title)}</h2><p class="prompt">${esc(m.prompt)}</p><div class="options">${m.options.map((o,i)=>`<button class="option" data-choice="${i}"><span class="option-key">${'ABC'[i]||i+1}</span><span class="option-text">${esc(o)}</span></button>`).join('')}</div>`;
   document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>answer(Number(b.dataset.choice)));
 }
 async function answer(choice){

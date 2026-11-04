@@ -85,3 +85,12 @@ body.in-game header{display:none}
 }
 @media(max-width:1180px){.arena{grid-template-areas:"scene scene" "q side" "hist hist"}}
 @media(max-width:750px){.arena{grid-template-areas:"scene" "side" "q" "hist"}}
+/* Respuestas repartidas en todo el alto de la columna */
+.options{display:flex;flex-direction:column;gap:12px;margin-top:14px}.options .option{margin:0}
+.option-text{flex:1}
+@media(min-width:1181px){
+  .question-card .options{flex:1;min-height:0}
+  .question-card .options .option{flex:1;align-items:center;font-size:1rem;padding:14px 16px;min-height:72px}
+}
+@media(min-width:1181px){.question-card .options{min-height:auto}.question-card .options .option{flex:1 0 auto;min-height:72px}}
+@media(min-width:1181px) and (max-width:1500px){.question-card .options .option{font-size:.9rem;padding:12px 13px}.question-card .prompt{font-size:.95rem}}
