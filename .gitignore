@@ -1,0 +1,5 @@
+/tools/cloudflared.exe
+/BIM-Mision-Individual*.html
+/node_modules/
+/.env
+*.log

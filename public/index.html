@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BIM: Construye tu misión</title><link rel="stylesheet" href="/style.css"></head>
+<body><main class="shell">
+<header><span class="eyebrow">MISIÓN BIM</span><h1>Construye tu proyecto</h1><p>Elige un personaje, toma decisiones de diseño y construcción, y descubre cuánto retrabajo genera tu edificio.</p></header>
+<section id="entry" class="card"><h2>Tu personaje</h2><p>Empieza cuando quieras. Escribe tu nombre y elige un personaje.</p><label>Tu nombre<input id="name" maxlength="40" placeholder="Escribe tu nombre"></label><div id="avatars" class="avatar-grid"></div><button id="start">Comenzar misión</button><p id="entryMessage" role="alert" hidden></p></section>
+<section id="game" hidden>
+  <div class="topline"><div id="identity"></div><div class="timer">Tiempo para responder: <strong id="timer">01:15</strong></div></div>
+  <section class="card project-card"><div class="project-heading"><div><span class="eyebrow">TU PROYECTO</span><h2 id="buildingName"></h2></div><div id="projectStage"></div></div><div id="projectVisual"></div><div id="projectStatus"></div></section>
+  <div class="layout"><div><section class="card" id="scenario"></section><section class="card" id="historyCard" hidden><h2>Registro de retrabajos</h2><div id="history"></div></section></div><aside><section class="card"><h2>Posiciones en vivo</h2><p class="hint">Durante la misión se ordenan por etapas completadas. El retrabajo y el resultado final aparecen al terminar.</p><div id="standings"></div></section><section class="card" id="leaderboardCard" hidden><h2>Resultado final</h2><div id="leaderboard"></div></section></aside></div>
+</section><p id="message" role="status"></p></main><script src="/app.js"></script></body></html>

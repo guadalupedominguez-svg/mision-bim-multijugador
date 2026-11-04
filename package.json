@@ -1,0 +1,7 @@
+{
+  "name": "bim-obra-compartida",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {"start": "node server.js", "presentacion": "node scripts/start-presentation.js", "export:questions": "node scripts/export-questions.js", "export:html": "node scripts/export-standalone.js"},
+  "engines": {"node": ">=20"}
+}

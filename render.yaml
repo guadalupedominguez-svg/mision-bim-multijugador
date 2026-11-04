@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: mision-bim-obra-compartida
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST_KEY
+        generateValue: true
