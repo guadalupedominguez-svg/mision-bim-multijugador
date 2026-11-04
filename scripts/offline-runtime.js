@@ -19,7 +19,7 @@ function bestText(i){const opts=OFFLINE.missions[i].options;let b=0;opts.forEach
 function expire(){while(game?.deadline&&Date.now()>=game.deadline)advance(null)}
 function gameState(){
   expire();const m=current(),finished=!m,work=game.history.reduce((sum,h)=>sum+h.work,0);
-  return {id:game.id,name:game.name,avatar:OFFLINE.avatars.find(a=>a.id===game.avatar),history:game.history.map((h,i)=>({...h,...(!finished?{work:undefined,carryover:undefined}:{lesson:OFFLINE.missions[i].lesson,best:bestText(i)})})),...(finished?{rework:work}:{}),total:OFFLINE.missions.length,stages:OFFLINE.missions.map(m=>m.stage),finished,deadline:game.deadline,questionMs:75000,mission:m&&{title:m.title,phase:m.phase,prompt:m.prompt,options:order(game.history.length).map(i=>m.options[i])},standings:[{name:game.name,avatar:game.avatar,progress:game.history.length,finished,place:1}],leaderboard:finished?[{name:game.name,avatar:game.avatar,rework:work}]:[]};
+  return {id:game.id,name:game.name,avatar:OFFLINE.avatars.find(a=>a.id===game.avatar),history:game.history.map((h,i)=>({...h,...(!finished?{work:undefined,carryover:undefined}:{lesson:OFFLINE.missions[i].lesson,best:bestText(i)})})),...(finished?{rework:work}:{}),total:OFFLINE.missions.length,stages:OFFLINE.missions.map(m=>m.stage),finished,deadline:game.deadline,questionMs:75000,mission:m&&{title:m.title,phase:m.phase,prompt:m.prompt,options:order(game.history.length).map(i=>m.options[i])},standings:[{name:game.name,avatar:game.avatar,progress:game.history.length,finished,place:1}],leaderboard:finished?[{name:game.name,avatar:game.avatar,rework:work,place:1,me:true}]:[],...(finished?{myPlace:1,finishedCount:1,playerCount:1}:{})};
 }
 async function offlineApi(path,data){
   if(path==='/api/avatars')return OFFLINE.avatars;

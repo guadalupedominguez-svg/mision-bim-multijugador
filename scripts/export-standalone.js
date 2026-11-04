@@ -13,6 +13,7 @@ app = app.replace("localStorage.getItem('bim-player-id')", "localStorage.getItem
   .replace(/async function api\(path,data\)\{.*?\}\nfunction msg/s, "async function api(path,data){return offlineApi(path,data)}\nfunction msg")
   .replaceAll("'/assets/${a.id}.png'", "'${OFFLINE.images[a.id]}'")
   .replaceAll("'/assets/${state.avatar.id}.png'", "'${OFFLINE.images[state.avatar.id]}'")
+  .replace("function sceneSrc(a){return '/assets/'+a.id+'.png';}", "function sceneSrc(a){return OFFLINE.images[a.id];}")
   .replace("Compara tu resultado con los demás en el panel lateral.", "Esta copia es individual: guarda tu resultado si quieres compararlo.");
 let html = fs.readFileSync(path.join(root, 'public', 'index.html'), 'utf8');
 html = html.replace('<link rel="stylesheet" href="/style.css">', `<style>${css}</style>`)

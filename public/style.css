@@ -25,3 +25,45 @@ body.host{background:radial-gradient(circle at 80% 0,#3b2f22 0,transparent 45%),
 .presentation{position:fixed;inset:0;z-index:10;overflow:auto;padding:5vh 6vw;background:radial-gradient(circle at 50% 0,#4a3a26 0,transparent 55%),#100d0e;text-align:center}.presentation h1{font-family:Georgia,serif;color:#fff0d7;font-size:clamp(2.4rem,5vw,4.5rem)}#closePresent{position:absolute;top:20px;right:20px}
 .podium{display:flex;justify-content:center;align-items:flex-end;gap:2vw;margin:5vh 0}.podium-spot{display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:flex-end;width:min(26vw,260px);padding:24px 14px;border:1px solid #6c5947;border-radius:16px 16px 0 0;background:#2a221dcc}.podium-spot span{font-size:3rem}.podium-spot strong{font-size:1.5rem;color:#fff0d7}.podium-spot small{color:#d1bfa6}.podium-spot b{color:#f1d59e;font-size:1.15rem}.podium-spot.p1{order:2;min-height:300px;border-color:#f1d59e}.podium-spot.p2{order:1;min-height:240px}.podium-spot.p3{order:3;min-height:200px}#presentList{max-width:640px;margin:auto;text-align:left;font-size:1.15rem}
 @media(max-width:750px){.podium{flex-direction:column;align-items:center}.podium-spot{width:100%;min-height:0!important;border-radius:16px}.podium-spot.p1{order:1}.podium-spot.p2{order:2}}
+/* ---- Acomodo en tres columnas: pregunta | escena | obra/resultado ---- */
+body.in-game .shell{max-width:1720px;padding-top:22px}
+body.in-game header{display:flex;align-items:baseline;gap:18px;margin-bottom:14px}body.in-game header h1{font-size:clamp(1.6rem,2.4vw,2.3rem);margin:0}body.in-game header p{display:none}
+.arena{display:grid;grid-template-columns:minmax(290px,370px) minmax(0,1fr) minmax(260px,340px);grid-template-areas:"q scene side";gap:18px;align-items:start}
+.question-card{grid-area:q}.arena-center{grid-area:scene;min-width:0}.side-card{grid-area:side}
+.question-card,.side-card{position:sticky;top:16px}
+.question-card h2{font-size:1.3rem;margin:6px 0 10px}.question-card .prompt{font-size:1.02rem;color:#fff0d7;margin:0 0 8px}.question-card .hint{margin:4px 0 6px}.question-card .option{font-size:.93rem;padding:12px 13px}
+.side-card{min-height:260px}.side-card.flash{animation:sideIn .5s ease}@keyframes sideIn{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+.feedback-title{font-family:Georgia,serif;font-size:1.15rem;margin:8px 0 10px;color:#fff0d7}.feedback-effect{font-size:1.02rem;color:#fff0d7;border-left:4px solid #e6c88e;padding:4px 0 4px 14px;margin:0 0 12px}.feedback-build{color:#dcc9a8;font-size:.9rem;margin:0}
+.feedback-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:28px 8px;color:#cdbb9f}.feedback-empty span{font-size:2.4rem;opacity:.7}
+.my-place{display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 8px 18px;margin:8px 0 12px;border-bottom:1px solid #6c5947;color:#e6d6bd}.my-place strong{font-family:Georgia,serif;font-size:4rem;line-height:1.05;color:#f1d59e}.my-place span:last-child{font-size:.88rem;color:#cdbb9f}
+.rank-head{display:flex;justify-content:space-between;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#bfae95;padding:0 8px 4px}.rank-list{max-height:52vh;overflow:auto}
+.project-card{padding:18px}.project-heading h2{margin:4px 0 12px}
+/* Escena animada */
+.scene-stage{position:relative;aspect-ratio:2/1;width:100%;border-radius:14px;overflow:hidden;background:#0d2238}
+.scene-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scene-phase{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:30px;background:#14110fcc;border:1px solid #d9b47c88;color:#fff0d7;font-size:.82rem;font-weight:700;letter-spacing:.02em}.scene-phase i{width:8px;height:8px;border-radius:50%;background:#ffc45a;box-shadow:0 0 8px #ffc45a;animation:blinkDot 1.2s ease-in-out infinite}@keyframes blinkDot{50%{opacity:.25}}
+.scene-stage .scene-caption{z-index:1}
+@media(prefers-reduced-motion:reduce){.scene-phase i,.side-card.flash{animation:none}}
+/* Pantallas medianas: escena arriba, pregunta y obra abajo */
+@media(max-width:1180px){.arena{grid-template-columns:1fr 1fr;grid-template-areas:"scene scene" "q side"}.question-card,.side-card{position:static}}
+@media(max-width:750px){.arena{grid-template-columns:1fr;grid-template-areas:"scene" "side" "q"}body.in-game header{display:block}.side-card{min-height:0}.feedback-empty{padding:10px}.my-place strong{font-size:3.2rem}}
+html{background:#0b171b}body{min-height:100vh}
+.my-place strong sup{font-size:.45em;vertical-align:.9em;margin-left:2px}
+@media(max-width:750px){.scene-stage .scene-caption{display:none}.side-card.empty{display:none}.scene-phase{top:8px;left:8px;font-size:.75rem;padding:5px 10px}}
+/* ---- Legibilidad sobre escenas claras ---- */
+body[data-avatar]{background:linear-gradient(180deg,rgba(11,12,16,.80),rgba(11,12,16,.94) 60%),var(--avatar-scene) center top/cover fixed,#0b171b}
+body.in-game header,.topline{background:rgba(20,17,16,.86);border:1px solid rgba(226,190,130,.28);border-radius:14px;padding:10px 18px;backdrop-filter:blur(8px)}
+body.in-game header{display:inline-flex;margin-bottom:12px}
+.topline{margin-bottom:16px}.topline .timer{background:#26443f}
+#identity strong{color:#fff3df}#identity small{color:#e6d6bd}
+.hint,.muted{color:#cbbfae}
+.stage{color:#c9b9a2}.stage small{color:#e0d1ba}.stage.built{color:#fff3df}
+.scene-phase,.scene-caption{text-shadow:0 1px 2px #0009}
+.feedback-build{color:#e6d6bd}.rank small{color:#d9c9b0}
+.option{color:#fff3df}
+body.in-game header{display:none}
+/* Color de texto explícito (algunos visores imponen su propio color de texto) */
+:root{color-scheme:dark}body{color:#e8f2f0}h1,h2,h3{color:#fff3df}.history-item p,.history-item b{color:#ece0cc}.history-item .hint{color:#cbbfae}
+/* Etapas: nunca desbordan su tarjeta */
+.project-card #projectStatus{grid-template-columns:repeat(var(--stages,5),minmax(0,1fr))}.stage{min-width:0;overflow-wrap:anywhere;padding:10px}
+@media(max-width:1500px){.stage{font-size:.76rem}.stage small{margin-left:0}}
