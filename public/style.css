@@ -67,3 +67,21 @@ body.in-game header{display:none}
 /* Etapas: nunca desbordan su tarjeta */
 .project-card #projectStatus{grid-template-columns:repeat(var(--stages,5),minmax(0,1fr))}.stage{min-width:0;overflow-wrap:anywhere;padding:10px}
 @media(max-width:1500px){.stage{font-size:.76rem}.stage small{margin-left:0}}
+/* ---- Pantalla completa en escritorio: las tres columnas llenan el alto de la ventana ---- */
+.project-card{grid-area:scene;min-width:0}.history-card{grid-area:hist;min-width:0}
+.arena{grid-template-areas:"q scene side" ". hist ."}
+@media(min-width:1181px){
+  body.in-game .shell{max-width:none;padding-block:14px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  body.in-game .topline{margin-bottom:14px}
+  body.in-game #message{min-height:0;margin:0}
+  .arena{grid-template-columns:minmax(300px,24%) minmax(0,1fr) minmax(280px,22%);grid-template-rows:max(560px,calc(100dvh - var(--topH,72px) - 60px)) auto;align-items:stretch}
+  .question-card,.side-card{position:static;overflow:auto;min-height:0}
+  .question-card{display:flex;flex-direction:column}
+  .project-card{display:flex;flex-direction:column;min-height:0}
+  .project-card #projectVisual{flex:1;min-height:0;display:flex}
+  .project-card .scene-stage{aspect-ratio:auto;height:100%;min-height:240px}
+  .project-card #projectStatus{flex:none}
+  .side-card .rank-list{max-height:none}
+}
+@media(max-width:1180px){.arena{grid-template-areas:"scene scene" "q side" "hist hist"}}
+@media(max-width:750px){.arena{grid-template-areas:"scene" "side" "q" "hist"}}

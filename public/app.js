@@ -12,6 +12,8 @@ function msg(x){$('message').textContent=x;const entryMessage=$('entryMessage');
 const DEFAULT_STAGES=['Planos','Estructura','Instalaciones','Fachada','Entrega'];
 let expiredFor=null;
 function stageLabels(){return state.stages&&state.stages.length===state.total?state.stages:DEFAULT_STAGES.slice(0,state.total);}
+function fitHeight(){const t=document.querySelector('#game .topline');if(t&&t.offsetHeight)document.documentElement.style.setProperty('--topH',t.offsetHeight+'px');}
+window.addEventListener('resize',fitHeight);
 function newGame(){localStorage.removeItem('bim-player-id');location.reload();}
 function sceneSrc(a){return '/assets/'+a.id+'.png';}
 
@@ -192,7 +194,7 @@ function render(){
   document.body.style.setProperty('--avatar-accent',state.avatar.accent);
   document.body.style.setProperty('--avatar-scene',`url('${sceneSrc(state.avatar)}')`);
   $('identity').innerHTML=`<span class="avatar-icon">${avatarIcon(state.avatar)}</span><strong>${esc(state.name)}</strong><small>${esc(state.avatar.name)}</small>`;
-  clock();drawBuilding();
+  clock();fitHeight();drawBuilding();
   $('historyCard').hidden=!state.finished;
   $('history').innerHTML=state.finished?state.history.map(historyItem).join(''):'';
   const side=$('sideCard'),html=state.finished?resultView():feedbackView();
