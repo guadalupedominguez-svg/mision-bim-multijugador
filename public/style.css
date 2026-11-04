@@ -62,3 +62,8 @@ body.in-game header{display:inline-flex;margin-bottom:12px}
 .feedback-build{color:#e6d6bd}.rank small{color:#d9c9b0}
 .option{color:#fff3df}
 body.in-game header{display:none}
+/* Color de texto explícito (algunos visores imponen su propio color de texto) */
+:root{color-scheme:dark}body{color:#e8f2f0}h1,h2,h3{color:#fff3df}.history-item p,.history-item b{color:#ece0cc}.history-item .hint{color:#cbbfae}
+/* Etapas: nunca desbordan su tarjeta */
+.project-card #projectStatus{grid-template-columns:repeat(var(--stages,5),minmax(0,1fr))}.stage{min-width:0;overflow-wrap:anywhere;padding:10px}
+@media(max-width:1500px){.stage{font-size:.76rem}.stage small{margin-left:0}}
