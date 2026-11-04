@@ -20,7 +20,7 @@ html = html.replace('<link rel="stylesheet" href="/style.css">', `<style>${css}<
   .replace('Posiciones en vivo', 'Tu avance')
   .replace('Durante la misión se ordenan por etapas completadas. El retrabajo y el resultado final aparecen al terminar.', 'Esta copia funciona en tu equipo. El retrabajo aparece al terminar.')
   .replace('Resultado final', 'Resultado de tu misión')
-  .replace('<script src="/app.js"></script>', `<script>const OFFLINE=${JSON.stringify(data).replaceAll('<','\\u003c')};</script><script>${fs.readFileSync(path.join(__dirname, 'offline-runtime.js'), 'utf8')}\n${app}</script>`);
+  .replace('<script src="/cranes.js"></script><script src="/app.js"></script>', `<script>${fs.readFileSync(path.join(root, 'public', 'cranes.js'), 'utf8')}</script><script>const OFFLINE=${JSON.stringify(data).replaceAll('<','\\u003c')};</script><script>${fs.readFileSync(path.join(__dirname, 'offline-runtime.js'), 'utf8')}\n${app}</script>`);
 const targets = [path.join(root, 'BIM-Mision-Individual.html'), path.join(root, 'BIM-Mision-Individual-actualizado.html')];
 for (const target of targets) {
   fs.writeFileSync(target, html);

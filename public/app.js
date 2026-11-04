@@ -45,10 +45,10 @@ const Scene=(()=>{
     W=canvas.width=w;H=canvas.height=h;buildLayers();buildTiles();return true;
   }
   function layer(){const c=document.createElement('canvas');c.width=W;c.height=H;return c;}
-  function buildLayers(){
+  function makeLayers(source){
     const color=layer(),cx=color.getContext('2d');
     const s=Math.max(W/img.naturalWidth,H/img.naturalHeight),dw=img.naturalWidth*s,dh=img.naturalHeight*s;
-    cx.drawImage(img,(W-dw)/2,(H-dh)/2,dw,dh);
+    cx.drawImage(source,(W-dw)/2,(H-dh)/2,dw,dh);
     const blue=layer(),grey=layer();
     try{
       const src=cx.getImageData(0,0,W,H).data,n=W*H,lum=new Float32Array(n);
@@ -66,7 +66,50 @@ const Scene=(()=>{
       const bc=blue.getContext('2d');bc.filter='grayscale(1) brightness(.45) sepia(1) hue-rotate(170deg) saturate(2.5)';bc.drawImage(color,0,0);
       const gc=grey.getContext('2d');gc.filter='grayscale(1) contrast(.8) brightness(1.1)';gc.drawImage(color,0,0);
     }
-    layers={color,blue,grey};
+    return {color,blue,grey};
+  }
+  // ---- Grúas en movimiento ----
+  // Cada grúa se recorta de la ilustración: la pluma gira (se acorta en perspectiva) alrededor del mástil
+  // y el gancho la sigue. El hueco que deja se rellena con el cielo cercano.
+  let cranes=null,cover=null;
+  const poly=(c,pts)=>{c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();};
+  function buildLayers(){
+    const cfg=(window.CRANES||{})[key];
+    const nw=img.naturalWidth,nh=img.naturalHeight,s=Math.max(W/nw,H/nh);
+    cover={s,ox:(W-nw*s)/2,oy:(H-nh*s)/2};
+    if(!cfg||reduce){layers=makeLayers(img);cranes=null;return;}
+    // imagen sin las piezas móviles
+    const er=document.createElement('canvas');er.width=nw;er.height=nh;const ec=er.getContext('2d');ec.drawImage(img,0,0);
+    const fills=[];cfg.forEach(cr=>{cr.parts.forEach(p=>fills.push(p));(cr.hooks||[]).forEach(h=>fills.push({poly:[[h.rect[0],h.rect[1]],[h.rect[2],h.rect[1]],[h.rect[2],h.rect[3]],[h.rect[0],h.rect[3]]],fill:h.fill}));(cr.erase||[]).forEach(e=>fills.push(e));});
+    fills.forEach(f=>{ec.save();poly(ec,f.poly);ec.clip();ec.drawImage(img,-f.fill[0],-f.fill[1]);ec.restore();});
+    layers=makeLayers(er);
+    const orig=makeLayers(img);
+    const toC=([x,y])=>[cover.ox+x*s,cover.oy+y*s];
+    const cut=(pts)=>{const c=pts.map(toC),xs=c.map(p=>p[0]),ys=c.map(p=>p[1]);const bx=Math.floor(Math.min(...xs))-1,by=Math.floor(Math.min(...ys))-1,bw=Math.ceil(Math.max(...xs))-bx+2,bh=Math.ceil(Math.max(...ys))-by+2;const out={bx,by};['color','blue','grey'].forEach(k=>{const cv=document.createElement('canvas');cv.width=Math.max(1,bw);cv.height=Math.max(1,bh);const g=cv.getContext('2d');poly(g,c.map(([x,y])=>[x-bx,y-by]));g.clip();g.drawImage(orig[k],-bx,-by);out[k]=cv;});return out;};
+    cranes=cfg.map(cr=>({...cr,ax:cover.ox+cr.axis*s,cuts:cr.parts.map(p=>cut(p.poly)),hookCuts:(cr.hooks||[]).map(h=>cut([[h.rect[0],h.rect[1]],[h.rect[2],h.rect[1]],[h.rect[2],h.rect[3]],[h.rect[0],h.rect[3]]]))}));
+  }
+  function drawCranes(now){
+    if(!cranes)return;
+    const t=now/1000,s=cover.s,C=([x,y])=>[cover.ox+x*s,cover.oy+y*s];
+    // zonas de la escena según su estado (plano / obra gris / terminado)
+    const zones={blue:new Path2D(),grey:new Path2D(),color:new Path2D()};
+    for(const tile of tiles){const z=now-tile.build>300?'color':now-tile.frame>225?'grey':'blue';zones[z].rect(tile.x0,tile.y0,tile.w,tile.h);}
+    const lineCol={color:'rgba(38,28,22,.9)',grey:'rgba(40,40,40,.85)',blue:'rgba(140,215,255,.85)'};
+    for(const cr of cranes){
+      const k=1-cr.amp*(1-Math.cos(t*2*Math.PI/cr.period+(cr.phase||0)))/2;
+      const bob=Math.sin(t*2*Math.PI/(cr.period*.55)+(cr.phase||0))*(cr.bob||3);
+      for(const z of ['blue','grey','color']){
+        ctx.save();ctx.clip(zones[z]);
+        cr.cuts.forEach(c=>{ctx.save();ctx.translate(cr.ax,0);ctx.scale(k,1);ctx.translate(-cr.ax,0);ctx.drawImage(c[z],c.bx,c.by);ctx.restore();});
+        (cr.hooks||[]).forEach((h,i)=>{
+          const dx=(h.x-cr.axis)*(k-1)*s,dy=bob*s,c=cr.hookCuts[i];
+          ctx.drawImage(c[z],c.bx+dx,c.by+dy);
+          if(h.anchors){const [hx,hy]=C(h.from);ctx.strokeStyle=lineCol[z];ctx.lineWidth=Math.max(1,1.6*s);ctx.beginPath();h.anchors.forEach(a=>{const [ax,ay]=C(a);ctx.moveTo(hx+dx,hy+dy);ctx.lineTo(ax,ay);});ctx.stroke();}
+        });
+        ctx.restore();
+      }
+      if(cr.light){const [lx,ly]=C(cr.light),x=cr.ax+(lx-cr.ax)*k,on=Math.sin(t*4+(cr.phase||0)*3)>.2;if(on){const g=ctx.createRadialGradient(x,ly,0,x,ly,7*dpr);g.addColorStop(0,'rgba(255,70,50,.95)');g.addColorStop(1,'rgba(255,70,50,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,ly,7*dpr,0,7);ctx.fill();}}
+    }
   }
   function buildTiles(){
     const cell=46*dpr;cols=Math.max(8,Math.round(W/cell));rows=Math.max(5,Math.round(H/cell));
@@ -122,6 +165,7 @@ const Scene=(()=>{
     if(!finished&&framed<tiles.length){
       const front=tiles.slice(built,framed);if(front.length){const top=Math.min(...front.map(x=>x.y0));ctx.fillStyle='rgba(242,190,92,.08)';ctx.fillRect(0,top,W,2*dpr);}
     }
+    drawCranes(now);
     // partículas: chispas de soldadura y polvo
     for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.life+=16;p.x+=p.vx;p.y+=p.vy;p.vy+=(p.kind==='dust'?.01:.09)*dpr;const k=1-p.life/p.max;if(k<=0){particles.splice(i,1);continue;}ctx.fillStyle=p.kind==='dust'?`rgba(220,205,180,${k*.35})`:`rgba(255,${190+Math.random()*60|0},90,${k})`;const r=(p.kind==='dust'?3.5:1.4)*dpr*(p.kind==='dust'?1.6-k:1);ctx.beginPath();ctx.arc(p.x,p.y,r,0,7);ctx.fill();}
     // destello final al terminar el edificio
