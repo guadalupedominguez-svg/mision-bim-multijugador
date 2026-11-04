@@ -12,39 +12,39 @@ const elements = {
   bloques: ['instrucciones de ensamble','pieza de instalaciones','módulo alternativo','piezas de fachada','módulos de la ciudad']
 };
 const pressure = [
-  'Hay personal y materiales reservados para hoy. Una revisión completa detendría el frente; una decisión rápida puede trasladar la incertidumbre a quien construye.',
-  'La instalación inicia esta tarde y liberar todo el frente retrasaría a dos equipos. Necesitas decidir qué se puede ejecutar y qué debe quedar en espera.',
-  'El cambio promete ahorrar tiempo ahora, pero otras especialidades ya tienen espacio y recursos asignados.',
-  'El proveedor necesita una instrucción hoy para mantener su turno de fabricación. Todavía falta confirmar un detalle con obra.',
-  'La entrega tiene fecha fija. El cliente necesita información utilizable y el equipo no puede verificar cada elemento con el mismo detalle.'
+  'Una revisión completa detendría la obra hoy.',
+  'El montaje empieza esta tarde.',
+  'Las cuadrillas esperan tu instrucción.',
+  'El proveedor necesita la orden hoy.',
+  'La fecha de entrega es fija.'
 ];
 function choices(avatar, round) {
   const x = (elements[avatar] || elements.gol)[round];
   return [
     [
-      `Reviso con los dos responsables solo la zona conflictiva relacionada con «${x}»; libero el resto y emito una versión común para esa zona.`,
-      `Libero la información de «${x}» con una condición y un punto de verificación antes de ejecutar la parte afectada; el equipo de campo conserva el control.`,
-      `Uso la versión más reciente de «${x}» para no perder la jornada y dejo la discrepancia para la reunión de mañana.`
+      `Reviso solo la zona en conflicto de «${x}» con ambos responsables y emito una versión común.`,
+      `Libero «${x}» con una condición: verificar antes de ejecutar la parte afectada.`,
+      `Uso la versión más reciente de «${x}» y dejo la diferencia para mañana.`
     ],
     [
-      `Separo el frente afectado por «${x}», coordino a las dos especialidades y libero el resto con una ruta revisada.`,
-      `Autorizo un tramo reversible de «${x}» hasta un punto de espera; confirmaremos la ruta definitiva antes de cerrar.`,
-      `Permito que el equipo ajuste «${x}» durante el montaje y documento la solución al terminar el turno.`
+      `Aparto la zona de «${x}», coordino a ambas especialidades y libero el resto.`,
+      `Autorizo un tramo de «${x}» hasta un punto de espera; la ruta final se confirma después.`,
+      `Dejo que el equipo ajuste «${x}» en el montaje y lo documento al final.`
     ],
     [
-      `Detengo todo el frente relacionado con «${x}» hasta reunir a todas las especialidades; rehago la secuencia de montaje antes de ejecutar.`,
-      `Pruebo «${x}» en un tramo limitado y reversible; confirmo con el otro equipo antes de extenderlo al resto.`,
-      `Ejecuto «${x}» en todo el frente para aprovechar la oportunidad y comunico el cambio en el reporte del día.`
+      `Detengo todo el frente de «${x}» hasta reunir a todas las especialidades.`,
+      `Pruebo «${x}» en un tramo pequeño y reversible; confirmo antes de extenderlo.`,
+      `Hago «${x}» en todo el frente y aviso en el reporte del día.`
     ],
     [
-      `Congelo solo las piezas afectadas en «${x}»; confirmo medidas y libero una versión nueva para fabricación.`,
-      `Inicio las piezas de «${x}» que no cambian y dejo las restantes sujetas a una verificación de campo mañana.`,
-      `Confirmo «${x}» por llamada para conservar el turno de fábrica y actualizo los documentos cuando lleguen las piezas.`
+      `Congelo solo las piezas de «${x}» que cambian, confirmo medidas y libero versión nueva.`,
+      `Fabrico las piezas de «${x}» que no cambian; el resto espera verificación mañana.`,
+      `Confirmo «${x}» por llamada y actualizo los documentos cuando lleguen las piezas.`
     ],
     [
-      `Priorizo los elementos críticos de «${x}», verifico su ubicación real y vinculo sus datos al registro final antes de entregar.`,
-      `Entrego la información de «${x}» con fotografías y una lista de excepciones asignadas para conciliar después de la apertura.`,
-      `Uso los últimos documentos aprobados para «${x}» como registro final y atiendo diferencias cuando operación las detecte.`
+      `Verifico los elementos críticos de «${x}» y los vinculo al registro final.`,
+      `Entrego «${x}» con fotos y una lista de pendientes por conciliar.`,
+      `Entrego los últimos planos aprobados de «${x}» y atiendo diferencias después.`
     ]
   ][round];
 }
