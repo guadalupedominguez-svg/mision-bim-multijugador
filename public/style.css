@@ -50,3 +50,15 @@ body.in-game header{display:flex;align-items:baseline;gap:18px;margin-bottom:14p
 html{background:#0b171b}body{min-height:100vh}
 .my-place strong sup{font-size:.45em;vertical-align:.9em;margin-left:2px}
 @media(max-width:750px){.scene-stage .scene-caption{display:none}.side-card.empty{display:none}.scene-phase{top:8px;left:8px;font-size:.75rem;padding:5px 10px}}
+/* ---- Legibilidad sobre escenas claras ---- */
+body[data-avatar]{background:linear-gradient(180deg,rgba(11,12,16,.80),rgba(11,12,16,.94) 60%),var(--avatar-scene) center top/cover fixed,#0b171b}
+body.in-game header,.topline{background:rgba(20,17,16,.86);border:1px solid rgba(226,190,130,.28);border-radius:14px;padding:10px 18px;backdrop-filter:blur(8px)}
+body.in-game header{display:inline-flex;margin-bottom:12px}
+.topline{margin-bottom:16px}.topline .timer{background:#26443f}
+#identity strong{color:#fff3df}#identity small{color:#e6d6bd}
+.hint,.muted{color:#cbbfae}
+.stage{color:#c9b9a2}.stage small{color:#e0d1ba}.stage.built{color:#fff3df}
+.scene-phase,.scene-caption{text-shadow:0 1px 2px #0009}
+.feedback-build{color:#e6d6bd}.rank small{color:#d9c9b0}
+.option{color:#fff3df}
+body.in-game header{display:none}
