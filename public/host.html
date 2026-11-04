@@ -1,8 +1,12 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Host · Misión BIM</title><link rel="stylesheet" href="/style.css"></head>
-<body><main class="shell">
+<body class="host"><main class="shell">
 <header><span class="eyebrow">VISTA PRIVADA DEL HOST</span><h1>Avance de participantes</h1><p>El tablero se actualiza automáticamente. Las posiciones provisionales muestran etapas completadas; el retrabajo aparece cuando cada persona termina.</p></header>
-<section class="card"><h2>Enlace para participantes</h2><p class="hint">Comparte solo este enlace. Conserva privada la dirección de esta vista.</p><p><a id="playerLink" href="/"></a></p><button id="copyPlayerLink" type="button">Copiar enlace</button></section>
-<section class="card"><div class="host-summary"><div><strong id="totalPlayers">0</strong><span>Participantes</span></div><div><strong id="activePlayers">0</strong><span>En misión</span></div><div><strong id="finishedPlayers">0</strong><span>Terminados</span></div></div></section>
-<section class="card"><h2>Actividad en tiempo real</h2><div id="hostPlayers"></div></section><p id="hostMessage" role="status"></p>
-</main><script src="/host.js"></script></body></html>
+<section class="card"><h2>Enlace para participantes</h2><p class="hint">Comparte solo este enlace. Conserva privada la dirección de esta vista.</p><p><a id="playerLink" href="/"></a></p><div class="host-actions"><button id="copyPlayerLink" type="button">Copiar enlace</button><a id="exportCsv" class="button secondary" href="#" download>Descargar resultados (CSV)</a><button id="present" type="button" class="secondary">Proyectar resultados</button><button id="resetSession" type="button" class="danger">Reiniciar sesión</button></div></section>
+<section class="card"><div class="host-summary"><div><strong id="totalPlayers">0</strong><span>Participantes</span></div><div><strong id="activePlayers">0</strong><span>En misión</span></div><div><strong id="finishedPlayers">0</strong><span>Terminados</span></div><div><strong id="avgRework">–</strong><span>Retrabajo promedio</span></div></div></section>
+<div class="layout"><section class="card"><h2>Actividad en tiempo real</h2><div id="hostPlayers"></div></section>
+<aside><section class="card" id="hostBoardCard"><h2>Resultado final</h2><div id="hostBoard"><p class="muted">Aparece cuando alguien termina.</p></div></section><section class="card"><h2>¿Dónde se generó el retrabajo?</h2><p class="hint">Suma del grupo por etapa (solo participantes que terminaron). Útil para abrir la discusión.</p><div id="stageBars" class="bars"></div></section></aside></div>
+<p id="hostMessage" role="status"></p>
+</main>
+<div id="presentation" class="presentation" hidden><button id="closePresent" type="button" class="secondary">Cerrar</button><span class="eyebrow">MISIÓN BIM · RESULTADO FINAL</span><h1>Menos retrabajo, mejor obra</h1><div id="podium" class="podium"></div><div id="presentList"></div></div>
+<script src="/host.js"></script></body></html>
