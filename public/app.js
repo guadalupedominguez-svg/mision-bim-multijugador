@@ -301,9 +301,12 @@ async function answer(choice){
 }
 function selectAvatar(b){selected=b.dataset.avatar;document.querySelectorAll('[data-avatar]').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',x===b);});}
 async function init(){try{avatars=await api('/api/avatars');$('avatars').innerHTML=avatars.map(a=>`<button class="avatar-card" data-avatar="${a.id}" type="button" aria-pressed="false" style="--card-scene:url('${sceneSrc(a)}')"><span>${avatarIcon(a)}</span><strong>${esc(a.name)}</strong><small>${esc(a.building)}</small></button>`).join('');document.querySelectorAll('[data-avatar]').forEach(b=>b.onclick=()=>selectAvatar(b));if(id){try{state=await api(`/api/state?id=${encodeURIComponent(id)}`);render();}catch{localStorage.removeItem('bim-player-id');id=null;}}}catch(e){msg(e.message);}}
-async function start(){if(!$('name').value.trim()){msg('Escribe tu nombre para comenzar.');$('name').focus();return;}if(!selected){msg('Elige un personaje para comenzar.');$('avatars').scrollIntoView({block:'nearest'});return;}$('start').disabled=true;try{state=await api('/api/start',{name:$('name').value,avatar:selected});id=state.id;localStorage.setItem('bim-player-id',id);msg('');render();window.scrollTo({top:0});}catch(e){msg(e.message);}finally{$('start').disabled=false;}}
+async function start(){if(!$('name').value.trim()){msg('Escribe tu nombre para comenzar.');$('name').focus();return;}if(!selected){msg('Elige una misión para comenzar.');$('avatars').scrollIntoView({block:'nearest'});return;}$('start').disabled=true;try{state=await api('/api/start',{name:$('name').value,avatar:selected});id=state.id;localStorage.setItem('bim-player-id',id);msg('');render();window.scrollTo({top:0});}catch(e){msg(e.message);}finally{$('start').disabled=false;}}
 $('start').onclick=start;
 $('name').addEventListener('keydown',e=>{if(e.key==='Enter')start();});
+// solo letras (con acentos y ñ) y espacios simples
+const NAME_OK=/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]/g;
+$('name').addEventListener('input',e=>{const el=e.target,before=el.value,clean=before.replace(NAME_OK,'').replace(/ {2,}/g,' ').replace(/^ /,'');if(clean!==before){const pos=Math.max(0,(el.selectionStart||0)-(before.length-clean.length));el.value=clean;el.setSelectionRange(pos,pos);msg('El nombre solo admite letras y espacios.');}else if($('entryMessage').textContent.startsWith('El nombre solo'))msg('');});
 document.addEventListener('keydown',e=>{if(!state||state.finished||e.target.tagName==='INPUT')return;const i='abc'.indexOf(e.key.toLowerCase());const b=document.querySelector(`[data-choice="${i}"]`);if(i>=0&&b&&!b.disabled)b.click();});
 init();
 setInterval(clock,250);

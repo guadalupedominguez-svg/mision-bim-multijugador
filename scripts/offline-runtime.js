@@ -24,8 +24,9 @@ function gameState(){
 async function offlineApi(path,data){
   if(path==='/api/avatars')return OFFLINE.avatars;
   if(path==='/api/start'){
-    const name=String(data.name||'').trim().slice(0,40);
-    if(!name||!OFFLINE.avatars.some(a=>a.id===data.avatar))throw Error('Elige un nombre y un personaje.');
+    const name=String(data.name||'').replace(/\s+/g,' ').trim().slice(0,40);
+    if(!name||!/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]+$/.test(name))throw Error('El nombre solo admite letras y espacios.');
+    if(!OFFLINE.avatars.some(a=>a.id===data.avatar))throw Error('Elige una misión para comenzar.');
     game={id:`local-${Date.now()}`,name,avatar:data.avatar,history:[],deadline:Date.now()+75000};persist();return gameState();
   }
   if(!game||!path.includes(game.id)&&data?.id!==game.id)throw Error('Partida no encontrada. Inicia una nueva.');

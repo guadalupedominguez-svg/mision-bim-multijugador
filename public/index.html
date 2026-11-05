@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BIM: Construye tu misión</title><link rel="stylesheet" href="/style.css"></head>
 <body><main class="shell">
-<header><span class="eyebrow">MISIÓN BIM</span><h1>Construye tu proyecto</h1><p>Elige un personaje, toma decisiones de diseño y construcción, y descubre cuánto retrabajo genera tu edificio.</p></header>
-<section id="entry" class="card"><h2>Tu personaje</h2><p>Empieza cuando quieras. Escribe tu nombre y elige un personaje.</p><label>Tu nombre<input id="name" maxlength="40" placeholder="Escribe tu nombre"></label><div id="avatars" class="avatar-grid"></div><button id="start">Comenzar misión</button><p id="entryMessage" role="alert" hidden></p></section>
+<header><span class="eyebrow">MISIÓN BIM</span><h1>Construye tu proyecto</h1></header>
+<section id="entry" class="card"><p class="entry-lead">Elige una misión, toma decisiones de diseño y construcción, y descubre cuánto retrabajo genera tu edificio.</p><label>Tu nombre<input id="name" maxlength="40" placeholder="Escribe tu nombre" autocomplete="given-name" inputmode="text" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]+" title="Solo letras y espacios"></label><div id="avatars" class="avatar-grid"></div><button id="start">Comenzar misión</button><p id="entryMessage" role="alert" hidden></p></section>
 <section id="game" hidden>
   <div class="topline"><div id="identity"></div><div class="timer">Tiempo para responder: <strong id="timer">01:15</strong></div></div>
   <div class="arena">
