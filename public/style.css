@@ -135,3 +135,4 @@ body.in-game header{display:none}
 @media(max-width:750px){.project-card #projectStatus{display:block}.progress-labels span{font-size:.72rem}}
 .progress-labels span{overflow-wrap:normal;white-space:nowrap}
 @media(max-width:750px){.progress-labels span{font-size:.66rem;letter-spacing:-.01em}}
+.progress-track i{background:var(--avatar-color,#e6c88e);box-shadow:none}
