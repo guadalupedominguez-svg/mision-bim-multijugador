@@ -122,3 +122,16 @@ body.in-game header{display:none}
 @media(prefers-reduced-motion:reduce){.name-warn.shake{animation:none}}
 #entry label .name-warn{position:absolute;right:8px;bottom:6px;margin:0}
 #entry label .name-warn[hidden]{display:none}
+/* ---- Barra de avance bajo la escena ---- */
+.project-card #projectStatus{display:block;margin-top:14px}
+.progress-track{position:relative;height:12px;border-radius:20px;background:#2c2520;border:1px solid #6c5947;overflow:hidden}
+.progress-track i{position:absolute;inset:0 auto 0 0;width:0;border-radius:20px;background:linear-gradient(90deg,#e6c88e,var(--avatar-color,#f0a35e));box-shadow:0 0 12px var(--avatar-color,#f0a35e);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.progress-track::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/var(--stages,5) - 2px),#14110f calc(100%/var(--stages,5) - 2px) calc(100%/var(--stages,5)));pointer-events:none}
+.progress-labels{display:grid;grid-template-columns:repeat(var(--stages,5),minmax(0,1fr));margin-top:8px}
+.progress-labels span{text-align:center;font-size:.85rem;font-weight:700;color:#8f7f6b;overflow-wrap:anywhere;transition:color .4s}
+.progress-labels span.done{color:#fff0d7}
+.progress-labels span.current{color:#f1d59e}
+@media(prefers-reduced-motion:reduce){.progress-track i{transition:none}}
+@media(max-width:750px){.project-card #projectStatus{display:block}.progress-labels span{font-size:.72rem}}
+.progress-labels span{overflow-wrap:normal;white-space:nowrap}
+@media(max-width:750px){.progress-labels span{font-size:.66rem;letter-spacing:-.01em}}

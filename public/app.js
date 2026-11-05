@@ -218,13 +218,16 @@ function drawBuilding(){
   const a=state.avatar,n=state.history.length,labels=stageLabels();
   $('buildingName').textContent=a.building;
   $('projectStage').textContent=`${n} / ${state.total} etapas`;
-  if(!$('sceneStage')){$('projectVisual').innerHTML=`<div class="scene-stage" id="sceneStage" role="img"><span class="scene-phase" id="scenePhase"></span><span class="scene-caption" id="sceneCaption"></span></div>`;}
+  if(!$('sceneStage')){$('projectVisual').innerHTML=`<div class="scene-stage" id="sceneStage" role="img"></div>`;}
   $('sceneStage').setAttribute('aria-label',`${a.building}: ${n} de ${state.total} etapas construidas`);
-  $('scenePhase').innerHTML=state.finished?'Obra terminada':`<i></i>En obra: ${esc(labels[n]||'')}`;
-  $('sceneCaption').innerHTML=`${avatarIcon(a)} ${esc(a.building)}`;
   Scene.mount($('sceneStage'),a,n,state.total,state.finished);
+  // barra de avance: se llena conforme se contestan las preguntas, con el nombre de cada etapa debajo
+  const pct=100*n/state.total;
   $('projectStatus').style.setProperty('--stages',state.total);
-  $('projectStatus').innerHTML=labels.map((label,i)=>`<div class="stage ${i<n?'built':''} ${i===n&&!state.finished?'current':''}"><span class="stage-dot" style="${i<n?`background:${a.color}`:''}"></span>${esc(label)}<small>${i<n?state.finished?state.history[i].work?`${state.history[i].work} retrabajo(s)`:'Sin retrabajo':'Etapa construida':i===n&&!state.finished?'En decisión':'Pendiente'}</small></div>`).join('');
+  $('projectStatus').setAttribute('role','progressbar');$('projectStatus').setAttribute('aria-valuemin','0');$('projectStatus').setAttribute('aria-valuemax',String(state.total));$('projectStatus').setAttribute('aria-valuenow',String(n));$('projectStatus').setAttribute('aria-label','Etapas completadas');
+  if(!$('progressFill')){$('projectStatus').innerHTML=`<div class="progress-track"><i id="progressFill"></i></div><div class="progress-labels" id="progressLabels"></div>`;}
+  $('progressFill').style.width=pct+'%';
+  $('progressLabels').innerHTML=labels.map((label,i)=>`<span class="${i<n?'done':''} ${i===n&&!state.finished?'current':''}">${esc(label)}</span>`).join('');
 }
 function clock(){
   if(!state)return;
