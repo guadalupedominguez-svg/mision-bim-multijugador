@@ -14,13 +14,20 @@ app = app.replace("localStorage.getItem('bim-player-id')", "localStorage.getItem
   .replaceAll("'/assets/${a.id}.png'", "'${OFFLINE.images[a.id]}'")
   .replaceAll("'/assets/${state.avatar.id}.png'", "'${OFFLINE.images[state.avatar.id]}'")
   .replace("function sceneSrc(a){return '/assets/'+a.id+'.png';}", "function sceneSrc(a){return OFFLINE.images[a.id];}")
+  .replace("function animSrc(p){return '/'+p;}", "function animSrc(p){return p;}")
   .replace("Compara tu resultado con los demás en el panel lateral.", "Esta copia es individual: guarda tu resultado si quieres compararlo.");
+// piezas animadas: se incrustan como data URI para que el HTML funcione sin servidor
+const animTxt = fs.readFileSync(path.join(root, 'public', 'scene-anim.js'), 'utf8');
+const anim = JSON.parse(animTxt.slice(animTxt.indexOf('{'), animTxt.lastIndexOf('}') + 1));
+const toData = p => `data:image/webp;base64,${fs.readFileSync(path.join(root, 'public', p)).toString('base64')}`;
+for (const sc of Object.values(anim)) { sc.plate = toData(sc.plate); sc.pieces.forEach(q => { if (q.src) q.src = toData(q.src); }); }
+const sceneAnim = `window.SCENE_ANIM=${JSON.stringify(anim)};`;
 let html = fs.readFileSync(path.join(root, 'public', 'index.html'), 'utf8');
 html = html.replace('<link rel="stylesheet" href="/style.css">', `<style>${css}</style>`)
   .replace('Posiciones en vivo', 'Tu avance')
   .replace('Durante la misión se ordenan por etapas completadas. El retrabajo y el resultado final aparecen al terminar.', 'Esta copia funciona en tu equipo. El retrabajo aparece al terminar.')
   .replace('Resultado final', 'Resultado de tu misión')
-  .replace('<script src="/cranes.js"></script><script src="/app.js"></script>', `<script>${fs.readFileSync(path.join(root, 'public', 'cranes.js'), 'utf8')}</script><script>const OFFLINE=${JSON.stringify(data).replaceAll('<','\\u003c')};</script><script>${fs.readFileSync(path.join(__dirname, 'offline-runtime.js'), 'utf8')}\n${app}</script>`);
+  .replace('<script src="/scene-anim.js"></script><script src="/app.js"></script>', `<script>${sceneAnim}</script><script>const OFFLINE=${JSON.stringify(data).replaceAll('<','\\u003c')};</script><script>${fs.readFileSync(path.join(__dirname, 'offline-runtime.js'), 'utf8')}\n${app}</script>`);
 const targets = [path.join(root, 'BIM-Mision-Individual.html'), path.join(root, 'BIM-Mision-Individual-actualizado.html')];
 for (const target of targets) {
   fs.writeFileSync(target, html);
