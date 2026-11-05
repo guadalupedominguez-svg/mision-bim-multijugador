@@ -136,3 +136,24 @@ body.in-game header{display:none}
 .progress-labels span{overflow-wrap:normal;white-space:nowrap}
 @media(max-width:750px){.progress-labels span{font-size:.66rem;letter-spacing:-.01em}}
 .progress-track i{background:var(--avatar-color,#e6c88e);box-shadow:none}
+/* ---- Curva tiempo–costo y botones finales ---- */
+.cost-figure{margin:14px 0 0;padding:12px 12px 8px;border:1px solid #6c594766;border-radius:12px;background:#1d1815aa}
+.cost-chart{display:block;width:100%;height:auto}
+.cost-figure figcaption{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:.8rem;color:#e6d6bd}
+.cost-figure figcaption small{flex-basis:100%;color:#a8977f;font-size:.72rem}
+.legend{display:inline-flex;align-items:center;gap:6px}.legend b{color:#fff0d7}
+.legend i{display:inline-block;width:18px;height:0;border-top:2.5px solid var(--avatar-color,#f0a35e)}.legend i.lg-plan{border-top:2px dashed #bfae95}
+.final-actions{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.final-actions button{width:100%}
+.final-actions .secondary{color:#f1d59e;border-color:#c9a974}
+/* Ventana del registro */
+.history-dialog{width:min(860px,calc(100vw - 32px));max-height:calc(100dvh - 48px);padding:0;border:1px solid #9f835c;border-radius:16px;background:#191512;color:#e8f2f0;box-shadow:0 30px 80px #000a}
+.history-dialog::backdrop{background:#0b0908cc;backdrop-filter:blur(3px)}
+.dialog-head{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:18px 22px 14px;background:#191512;border-bottom:1px solid #6c594766}
+.dialog-head h2{margin:4px 0 0;font-family:Georgia,serif;color:#fff0d7}
+.dialog-actions{display:flex;gap:10px}
+.dialog-body{padding:6px 22px 22px}
+.arena{grid-template-areas:"q scene side"}
+@media(min-width:1181px){.arena{grid-template-rows:max(560px,calc(100dvh - var(--topH,72px) - 60px))}}
+@media(max-width:1180px){.arena{grid-template-areas:"scene scene" "q side"}}
+@media(max-width:750px){.arena{grid-template-areas:"scene" "side" "q"}}

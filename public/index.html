@@ -9,6 +9,9 @@
     <section class="card question-card" id="scenario"></section>
     <section class="card project-card"><div class="project-heading"><div><span class="eyebrow">TU PROYECTO</span><h2 id="buildingName"></h2></div><div id="projectStage"></div></div><div id="projectVisual"></div><div id="projectStatus"></div></section>
     <aside class="card side-card" id="sideCard" aria-live="polite"></aside>
-    <section class="card history-card" id="historyCard" hidden><h2>Registro de retrabajos</h2><div id="history"></div></section>
   </div>
-</section><p id="message" role="status"></p></main><script src="/scene-anim.js"></script><script src="/app.js"></script></body></html>
+</section><p id="message" role="status"></p></main>
+<dialog id="historyDialog" class="history-dialog" aria-labelledby="historyTitle">
+  <div class="dialog-head"><div><span class="eyebrow">TU PROYECTO</span><h2 id="historyTitle">Registro de retrabajos</h2></div><div class="dialog-actions"><button id="downloadReport" type="button">Descargar reporte</button><button id="closeHistory" type="button" class="secondary" aria-label="Cerrar">Cerrar</button></div></div>
+  <div id="history" class="dialog-body"></div>
+</dialog><script src="/scene-anim.js"></script><script src="/app.js"></script></body></html>
