@@ -26,12 +26,16 @@ SCENES = {
   # ---------- grúas: 'poly'/'polys' ajustados a la estructura; 'add' = partes sólidas (cargas, contrapesos)
   'gol': {'pieces': [
     {'id': 'g1-pluma', 'poly': [[424,106],[792,60],[792,94],[424,160]],
-     'motion': {'type': 'slew', 'axis': 398, 'amp': .06, 'period': 14, 'phase': 0, 'light': [782,64]}},
-    {'id': 'g1-eslingas', 'poly': [[666,174],[616,224],[728,224],[676,174]],
+     'motion': {'type': 'slew', 'axis': 398, 'amp': .035, 'period': 14, 'phase': 0, 'light': [782,64]}},
+    # cable del gancho: se borra y se dibuja como línea entre el carro de la pluma y el gancho
+    {'id': 'g1-cable', 'poly': rect(664,104,677,151),
      'motion': {'type': 'erase'}},
-    {'id': 'g1-gancho', 'poly': [[660,98],[682,98],[682,180],[660,180]],
-     'motion': {'type': 'hang', 'follow': 'g1-pluma', 'top': [670,104], 'swing': 0, 'bob': 0,
-                'from': [670,177], 'anchors': [[628,218],[672,220],[716,218]]}},
+    # carga: gancho + eslingas + punta del arco de cubierta que se está colocando; gira sobre la unión
+    {'id': 'g1-carga', 'poly': rect(661,149,680,168),
+     'polys': [[[669,160],[612,226],[730,226],[673,160]],
+               [[650,228],[700,214],[796,210],[796,238],[700,247],[650,253]]],
+     'motion': {'type': 'rotate', 'pivot': [650,240], 'deg': 2.2, 'period': 9, 'phase': 0,
+                'cable': {'on': 'g1-pluma', 'top': [670,105], 'bottom': [670,151]}}},
     {'id': 'g2-pluma', 'poly': [[1120,242],[972,260],[972,280],[1120,264]],
      'polys': [[[1132,214],[1016,254],[1020,264],[1134,222]]],
      'motion': {'type': 'slew', 'axis': 1131, 'amp': .2, 'period': 11, 'phase': 2, 'light': [978,268]}},

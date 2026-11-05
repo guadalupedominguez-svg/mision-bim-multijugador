@@ -139,6 +139,8 @@ const Scene=(()=>{
       for(const q of pieces){
         const M=C.multiply(out[q.id]).multiply(Ci);
         ctx.setTransform(M);ctx.drawImage(q.cut[z],q.bx,q.by);
+        if(q.cable){ctx.setTransform(1,0,0,1,0,0);const A=new DOMPoint(q.cable.top[0],q.cable.top[1]).matrixTransform(C.multiply(out[q.cable.on])),Bp=new DOMPoint(q.cable.bottom[0],q.cable.bottom[1]).matrixTransform(C.multiply(out[q.id]));
+          ctx.strokeStyle=lineCol[z];ctx.lineWidth=Math.max(1,2.2*s);ctx.beginPath();ctx.moveTo(A.x-1.6*s,A.y);ctx.lineTo(Bp.x-1.6*s,Bp.y);ctx.moveTo(A.x+1.6*s,A.y);ctx.lineTo(Bp.x+1.6*s,Bp.y);ctx.stroke();}
         if(q.anchors){ctx.setTransform(1,0,0,1,0,0);const f=new DOMPoint(q.from[0],q.from[1]).matrixTransform(C.multiply(out[q.id]));
           ctx.strokeStyle=lineCol[z];ctx.lineWidth=Math.max(1,1.6*s);ctx.beginPath();
           q.anchors.forEach(([ax,ay])=>{ctx.moveTo(f.x,f.y);ctx.lineTo(ox+ax*s,oy+ay*s);});ctx.stroke();}
@@ -218,13 +220,16 @@ function drawBuilding(){
   const a=state.avatar,n=state.history.length,labels=stageLabels();
   $('buildingName').textContent=a.building;
   $('projectStage').textContent=`${n} / ${state.total} etapas`;
-  if(!$('sceneStage')){$('projectVisual').innerHTML=`<div class="scene-stage" id="sceneStage" role="img"><span class="scene-phase" id="scenePhase"></span><span class="scene-caption" id="sceneCaption"></span></div>`;}
+  if(!$('sceneStage')){$('projectVisual').innerHTML=`<div class="scene-stage" id="sceneStage" role="img"></div>`;}
   $('sceneStage').setAttribute('aria-label',`${a.building}: ${n} de ${state.total} etapas construidas`);
-  $('scenePhase').innerHTML=state.finished?'Obra terminada':`<i></i>En obra: ${esc(labels[n]||'')}`;
-  $('sceneCaption').innerHTML=`${avatarIcon(a)} ${esc(a.building)}`;
   Scene.mount($('sceneStage'),a,n,state.total,state.finished);
+  // barra de avance: se llena conforme se contestan las preguntas, con el nombre de cada etapa debajo
+  const pct=100*n/state.total;
   $('projectStatus').style.setProperty('--stages',state.total);
-  $('projectStatus').innerHTML=labels.map((label,i)=>`<div class="stage ${i<n?'built':''} ${i===n&&!state.finished?'current':''}"><span class="stage-dot" style="${i<n?`background:${a.color}`:''}"></span>${esc(label)}<small>${i<n?state.finished?state.history[i].work?`${state.history[i].work} retrabajo(s)`:'Sin retrabajo':'Etapa construida':i===n&&!state.finished?'En decisión':'Pendiente'}</small></div>`).join('');
+  $('projectStatus').setAttribute('role','progressbar');$('projectStatus').setAttribute('aria-valuemin','0');$('projectStatus').setAttribute('aria-valuemax',String(state.total));$('projectStatus').setAttribute('aria-valuenow',String(n));$('projectStatus').setAttribute('aria-label','Etapas completadas');
+  if(!$('progressFill')){$('projectStatus').innerHTML=`<div class="progress-track"><i id="progressFill"></i></div><div class="progress-labels" id="progressLabels"></div>`;}
+  $('progressFill').style.width=pct+'%';
+  $('progressLabels').innerHTML=labels.map((label,i)=>`<span class="${i<n?'done':''} ${i===n&&!state.finished?'current':''}">${esc(label)}</span>`).join('');
 }
 function clock(){
   if(!state)return;
@@ -248,11 +253,73 @@ async function refresh(force){
     if(/no encontrada/i.test(e.message)){localStorage.removeItem('bim-player-id');id=null;state=null;$('game').hidden=true;$('entry').hidden=false;document.body.classList.remove('in-game');msg('La partida ya no existe en el servidor. Inicia una nueva misión.');}
   }
 }
+// ---- Curva Tiempo–Costo (ilustrativa) ----
+// Plan: cada etapa dura lo mismo y consume un porcentaje del presupuesto (curva en S).
+// Cada retrabajo alarga su etapa y suma costo. Son reglas del juego, no horas ni pesos reales.
+const STAGE_COST=[.14,.30,.26,.20,.10],REWORK_TIME=.22,REWORK_COST=.035;
+function costCurve(history){
+  const n=history.length,share=i=>STAGE_COST[i]??1/n;
+  let tp=0,cp=0,tr=0,cr=0;const plan=[[0,0]],real=[[0,0]];
+  history.forEach((h,i)=>{const w=h.work||0;tp+=1;cp+=share(i);tr+=1+REWORK_TIME*w;cr+=share(i)+REWORK_COST*w;plan.push([tp,cp]);real.push([tr,cr]);});
+  return {plan,real,extraTime:tr/tp-1,extraCost:cr/cp-1};
+}
+function costChartSVG(history,opts={}){
+  const {plan,real,extraTime,extraCost}=costCurve(history);
+  const W=opts.w||320,H=opts.h||170,L=30,R=12,T=12,B=26;
+  const maxX=Math.max(real.at(-1)[0],plan.at(-1)[0])*1.04,maxY=Math.max(real.at(-1)[1],plan.at(-1)[1])*1.08;
+  const X=x=>L+(W-L-R)*x/maxX,Y=y=>H-B-(H-T-B)*y/maxY;
+  const path=pts=>pts.map(([x,y],i)=>`${i?'L':'M'}${X(x).toFixed(1)},${Y(y).toFixed(1)}`).join('');
+  const col=opts.real||'var(--avatar-color,#f0a35e)',axis=opts.axis||'#bfae95',grid=opts.grid||'rgba(191,174,149,.18)',txt=opts.text||'#e6d6bd';
+  const last=real.at(-1),pl=plan.at(-1);
+  return `<svg class="cost-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Curva de tiempo y costo: tu proyecto terminó con ${Math.round(extraTime*100)}% más tiempo y ${Math.round(extraCost*100)}% más costo que el plan sin retrabajo">
+    ${[.25,.5,.75,1].map(f=>`<line x1="${L}" x2="${W-R}" y1="${Y(maxY*f/1.08).toFixed(1)}" y2="${Y(maxY*f/1.08).toFixed(1)}" stroke="${grid}" stroke-width="1"/>`).join('')}
+    <line x1="${L}" y1="${T}" x2="${L}" y2="${H-B}" stroke="${axis}" stroke-width="1.5"/>
+    <line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="${axis}" stroke-width="1.5"/>
+    <text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle" fill="${txt}" font-size="11" font-weight="700">Tiempo</text>
+    <text x="11" y="${(T+H-B)/2}" text-anchor="middle" fill="${txt}" font-size="11" font-weight="700" transform="rotate(-90 11 ${(T+H-B)/2})">Costo</text>
+    <path d="${path(plan)}" fill="none" stroke="${axis}" stroke-width="2" stroke-dasharray="5 4"/>
+    <path d="${path(real)}" fill="none" stroke="${col}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${X(pl[0]).toFixed(1)}" cy="${Y(pl[1]).toFixed(1)}" r="3.5" fill="${axis}"/>
+    <circle cx="${X(last[0]).toFixed(1)}" cy="${Y(last[1]).toFixed(1)}" r="4.5" fill="${col}"/>
+    <line x1="${X(pl[0]).toFixed(1)}" y1="${Y(pl[1]).toFixed(1)}" x2="${X(pl[0]).toFixed(1)}" y2="${H-B}" stroke="${axis}" stroke-width="1" stroke-dasharray="2 3"/>
+    <line x1="${X(last[0]).toFixed(1)}" y1="${Y(last[1]).toFixed(1)}" x2="${X(last[0]).toFixed(1)}" y2="${H-B}" stroke="${col}" stroke-width="1" stroke-dasharray="2 3"/>
+    <text x="${(X(pl[0])-6).toFixed(1)}" y="${(Y(pl[1])+16).toFixed(1)}" text-anchor="end" fill="${txt}" font-size="10">Plan</text>
+    <text x="${(X(last[0])-6).toFixed(1)}" y="${(Y(last[1])-7).toFixed(1)}" text-anchor="end" fill="${txt}" font-size="10" font-weight="700">Real</text>
+  </svg>`;
+}
+function costSummary(history){
+  const {extraTime,extraCost}=costCurve(history),pct=v=>`${v>0?'+':''}${Math.round(v*100)}%`;
+  return {time:pct(extraTime),cost:pct(extraCost)};
+}
 function finishedView(){
   const max=Math.max(3,...state.history.map(h=>h.work||0));
   const bars=state.history.map((h,i)=>`<div class="bar-row"><span>${esc(stageLabels()[i])}</span><div class="bar"><i style="width:${100*(h.work||0)/max}%"></i></div><b>${h.work||0}</b></div>`).join('');
-  const clean=state.history.filter(h=>!h.work).length;
-  return `<span class="eyebrow">MISIÓN COMPLETADA</span><h2>Tu edificio está terminado</h2><div class="final-score"><strong>${state.rework}</strong><span>retrabajo(s)<br><small>${clean} de ${state.total} etapas sin retrabajo</small></span></div><div class="bars" aria-label="Retrabajo por etapa">${bars}</div><p class="hint">Abajo de la escena está el detalle de cada etapa y qué decisión lo habría evitado.</p><button id="again" type="button">Iniciar otra misión</button>`;
+  const clean=state.history.filter(h=>!h.work).length,sum=costSummary(state.history);
+  return `<span class="eyebrow">MISIÓN COMPLETADA</span><h2>Tu edificio está terminado</h2><div class="final-score"><strong>${state.rework}</strong><span>retrabajo(s)<br><small>${clean} de ${state.total} etapas sin retrabajo</small></span></div><div class="bars" aria-label="Retrabajo por etapa">${bars}</div>
+  <figure class="cost-figure">${costChartSVG(state.history)}<figcaption><span class="legend"><i class="lg-plan"></i>Plan sin retrabajo</span><span class="legend"><i class="lg-real"></i>Tu proyecto: <b>${sum.time}</b> tiempo · <b>${sum.cost}</b> costo</span><small>Valores ilustrativos del juego.</small></figcaption></figure>
+  <div class="final-actions"><button id="openHistory" type="button" class="secondary">Registro de retrabajos</button><button id="again" type="button">Iniciar otra misión</button></div>`;
+}
+function reportHTML(){
+  const s=state,date=new Date().toLocaleString('es-MX',{dateStyle:'long',timeStyle:'short'}),sum=costSummary(s.history);
+  const rows=s.history.map((h,i)=>`<section class="st"><h3>${i+1}. ${esc(stageLabels()[i])} — ${esc(h.title)} <span class="w ${h.work?'':'ok'}">${h.work} retrabajo(s)</span></h3><p><b>Decisión:</b> ${esc(h.choice)}</p><p><b>Resultado en obra:</b> ${esc(h.build)}</p><p><b>Efecto para el siguiente equipo:</b> ${esc(h.effect)}</p>${h.carryover?'<p class="n">Incluye 1 retrabajo por una incertidumbre arrastrada desde la etapa anterior.</p>':''}${h.best&&h.work>0&&h.best!==h.choice?`<p class="b"><b>Opción con menos retrabajo:</b> ${esc(h.best)}</p>`:''}${h.lesson?`<p class="l"><b>Concepto BIM:</b> ${esc(h.lesson)}</p>`:''}</section>`).join('');
+  const chart=costChartSVG(s.history,{w:520,h:240,real:'#c4621d',axis:'#7a6a58',grid:'#e7dfd3',text:'#3a2f25'});
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Reporte Misión BIM · ${esc(s.name)}</title><style>
+body{font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif;color:#2a221b;background:#fff;max-width:820px;margin:32px auto;padding:0 20px}
+h1{font:700 28px/1.15 Georgia,serif;margin:0 0 4px}h2{font:700 18px Georgia,serif;margin:28px 0 10px}.meta{color:#6b5d4f;margin:0 0 20px}
+.kpis{display:flex;gap:12px;flex-wrap:wrap}.kpi{border:1px solid #e1d6c6;border-radius:10px;padding:10px 14px;min-width:120px}.kpi b{display:block;font:700 26px Georgia,serif}.kpi span{color:#6b5d4f;font-size:13px}
+.st{border-left:4px solid #e0a35e;padding:4px 0 4px 14px;margin:14px 0;break-inside:avoid}.st h3{font-size:16px;margin:0 0 6px}.st p{margin:4px 0}.w{font-size:12px;background:#fbe3cf;color:#8a3e0f;border-radius:20px;padding:2px 8px;margin-left:6px}.w.ok{background:#dcf3e8;color:#1f6b4a}
+.b{background:#eef7f2;border-radius:8px;padding:6px 10px}.l{background:#f8f2e8;border-radius:8px;padding:6px 10px}.n{color:#6b5d4f;font-size:13px}.legend{font-size:13px;color:#6b5d4f}.foot{color:#8a7b6a;font-size:12px;margin-top:28px}
+@media print{body{margin:0}}</style></head><body>
+<h1>Reporte de misión BIM</h1><p class="meta">${esc(s.name)} · ${esc(s.avatar.name)} · ${esc(s.avatar.building)} · ${date}</p>
+<div class="kpis"><div class="kpi"><b>${s.rework}</b><span>retrabajos en total</span></div>${s.myPlace?`<div class="kpi"><b>${s.myPlace}.º</b><span>lugar de ${s.finishedCount}</span></div>`:''}<div class="kpi"><b>${sum.time}</b><span>tiempo vs. plan</span></div><div class="kpi"><b>${sum.cost}</b><span>costo vs. plan</span></div></div>
+<h2>Curva tiempo–costo</h2>${chart}<p class="legend">Línea punteada: plan sin retrabajo. Línea continua: tu proyecto. Valores ilustrativos del juego, no equivalen a horas ni costos reales.</p>
+<h2>Registro de retrabajos por etapa</h2>${rows}
+<p class="foot">Generado por Misión BIM.</p></body></html>`;
+}
+function downloadReport(){
+  const blob=new Blob([reportHTML()],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  const slug=String(state.name).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z]+/g,'-').replace(/^-|-$/g,'').toLowerCase()||'jugador';
+  a.href=url;a.download=`reporte-mision-bim-${slug}.html`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
 }
 function historyItem(h,i){
   const best=h.best&&h.work>0&&h.best!==h.choice?`<p class="best"><span>Opción con menos retrabajo en esta etapa</span>${esc(h.best)}</p>`:'';
@@ -279,12 +346,11 @@ function render(){
   document.body.style.setProperty('--avatar-scene',`url('${sceneSrc(state.avatar)}')`);
   $('identity').innerHTML=`<span class="avatar-icon">${avatarIcon(state.avatar)}</span><strong>${esc(state.name)}</strong><small>${esc(state.avatar.name)}</small>`;
   clock();fitHeight();drawBuilding();
-  $('historyCard').hidden=!state.finished;
   $('history').innerHTML=state.finished?state.history.map(historyItem).join(''):'';
   const side=$('sideCard'),html=state.finished?resultView():feedbackView();
   if(side.dataset.html!==html){side.innerHTML=html;side.dataset.html=html;side.classList.remove('flash');void side.offsetWidth;side.classList.add('flash');}
   side.classList.toggle('result',state.finished);side.classList.toggle('empty',!state.finished&&!state.history.length);
-  if(state.finished){$('scenario').innerHTML=finishedView();$('again').onclick=newGame;return;}
+  if(state.finished){$('scenario').innerHTML=finishedView();$('again').onclick=newGame;$('openHistory').onclick=()=>{const d=$('historyDialog');d.showModal?d.showModal():d.setAttribute('open','');};return;}
   const m=state.mission;
   $('scenario').innerHTML=`<span class="eyebrow">MISIÓN ${state.history.length+1} DE ${state.total}${m.phase?` · ${esc(m.phase)}`:''}</span><h2>${esc(m.title)}</h2><p class="prompt">${esc(m.prompt)}</p><div class="options">${m.options.map((o,i)=>`<button class="option" data-choice="${i}"><span class="option-key">${'ABC'[i]||i+1}</span><span class="option-text">${esc(o)}</span></button>`).join('')}</div>`;
   document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>answer(Number(b.dataset.choice)));
@@ -301,9 +367,16 @@ async function answer(choice){
 }
 function selectAvatar(b){selected=b.dataset.avatar;document.querySelectorAll('[data-avatar]').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',x===b);});}
 async function init(){try{avatars=await api('/api/avatars');$('avatars').innerHTML=avatars.map(a=>`<button class="avatar-card" data-avatar="${a.id}" type="button" aria-pressed="false" style="--card-scene:url('${sceneSrc(a)}')"><span>${avatarIcon(a)}</span><strong>${esc(a.name)}</strong><small>${esc(a.building)}</small></button>`).join('');document.querySelectorAll('[data-avatar]').forEach(b=>b.onclick=()=>selectAvatar(b));if(id){try{state=await api(`/api/state?id=${encodeURIComponent(id)}`);render();}catch{localStorage.removeItem('bim-player-id');id=null;}}}catch(e){msg(e.message);}}
-async function start(){if(!$('name').value.trim()){msg('Escribe tu nombre para comenzar.');$('name').focus();return;}if(!selected){msg('Elige un personaje para comenzar.');$('avatars').scrollIntoView({block:'nearest'});return;}$('start').disabled=true;try{state=await api('/api/start',{name:$('name').value,avatar:selected});id=state.id;localStorage.setItem('bim-player-id',id);msg('');render();window.scrollTo({top:0});}catch(e){msg(e.message);}finally{$('start').disabled=false;}}
+async function start(){if(!$('name').value.trim()){msg('Escribe tu nombre para comenzar.');$('name').focus();return;}if(!selected){msg('Elige una misión para comenzar.');$('avatars').scrollIntoView({block:'nearest'});return;}$('start').disabled=true;try{state=await api('/api/start',{name:$('name').value,avatar:selected});id=state.id;localStorage.setItem('bim-player-id',id);msg('');render();window.scrollTo({top:0});}catch(e){msg(e.message);}finally{$('start').disabled=false;}}
 $('start').onclick=start;
+$('closeHistory').onclick=()=>{const d=$('historyDialog');d.close?d.close():d.removeAttribute('open');};
+$('historyDialog').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.close();});
+$('downloadReport').onclick=downloadReport;
 $('name').addEventListener('keydown',e=>{if(e.key==='Enter')start();});
+// solo letras (con acentos y ñ) y espacios simples
+const NAME_OK=/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]/g;
+$('name').addEventListener('input',e=>{const el=e.target,before=el.value,clean=before.replace(NAME_OK,'').replace(/ {2,}/g,' ').replace(/^ /,'');if(clean!==before){const pos=Math.max(0,(el.selectionStart||0)-(before.length-clean.length));el.value=clean;el.setSelectionRange(pos,pos);if(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]/.test(before))warnName();}});
+let warnTimer=null;function warnName(){const w=$('nameWarn');w.hidden=false;w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake');clearTimeout(warnTimer);warnTimer=setTimeout(()=>{w.hidden=true;},3500);}
 document.addEventListener('keydown',e=>{if(!state||state.finished||e.target.tagName==='INPUT')return;const i='abc'.indexOf(e.key.toLowerCase());const b=document.querySelector(`[data-choice="${i}"]`);if(i>=0&&b&&!b.disabled)b.click();});
 init();
 setInterval(clock,250);
