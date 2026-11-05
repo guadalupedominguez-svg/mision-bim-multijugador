@@ -45,10 +45,10 @@ const Scene=(()=>{
     W=canvas.width=w;H=canvas.height=h;buildLayers();buildTiles();return true;
   }
   function layer(){const c=document.createElement('canvas');c.width=W;c.height=H;return c;}
-  function buildLayers(){
+  function makeLayers(source){
     const color=layer(),cx=color.getContext('2d');
     const s=Math.max(W/img.naturalWidth,H/img.naturalHeight),dw=img.naturalWidth*s,dh=img.naturalHeight*s;
-    cx.drawImage(img,(W-dw)/2,(H-dh)/2,dw,dh);
+    cx.drawImage(source,(W-dw)/2,(H-dh)/2,dw,dh);
     const blue=layer(),grey=layer();
     try{
       const src=cx.getImageData(0,0,W,H).data,n=W*H,lum=new Float32Array(n);
@@ -66,8 +66,94 @@ const Scene=(()=>{
       const bc=blue.getContext('2d');bc.filter='grayscale(1) brightness(.45) sepia(1) hue-rotate(170deg) saturate(2.5)';bc.drawImage(color,0,0);
       const gc=grey.getContext('2d');gc.filter='grayscale(1) contrast(.8) brightness(1.1)';gc.drawImage(color,0,0);
     }
-    layers={color,blue,grey};
+    return {color,blue,grey};
   }
+  // ---- Grúas en movimiento ----
+  // Cada grúa se recorta de la ilustración. En grúas torre la pluma gira alrededor del mástil (se ve
+  // acortarse en perspectiva); en grúas de pluma inclinada la pluma sube y baja; el gancho y la carga
+  // la siguen y se balancean. El hueco que dejan se rellena con el cielo cercano.
+  let cranes=null,cover=null;
+  const poly=(c,pts)=>{c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();};
+  const rectPoly=r=>[[r[0],r[1]],[r[2],r[1]],[r[2],r[3]],[r[0],r[3]]];
+  function fillRegion(ec,src,srcData,nw,nh,f){
+    if(f.fill!=='interp'){ec.save();poly(ec,f.poly);ec.clip();ec.drawImage(src,-f.fill[0],-f.fill[1]);ec.restore();return;}
+    // relleno por interpolación fila por fila entre los bordes izquierdo y derecho
+    const xs=f.poly.map(p=>p[0]),ys=f.poly.map(p=>p[1]);
+    const x0=Math.max(1,Math.floor(Math.min(...xs))),x1=Math.min(nw-2,Math.ceil(Math.max(...xs))),y0=Math.max(0,Math.floor(Math.min(...ys))),y1=Math.min(nh-1,Math.ceil(Math.max(...ys)));
+    const w=x1-x0+1,h=y1-y0+1;if(w<1||h<1)return;
+    const m=document.createElement('canvas');m.width=w;m.height=h;const mc=m.getContext('2d');poly(mc,f.poly.map(([x,y])=>[x-x0,y-y0]));mc.fill();
+    const md=mc.getImageData(0,0,w,h).data,out=ec.getImageData(x0,y0,w,h),od=out.data;
+    const px=(x,y)=>{const i=(y*nw+x)*4;return [srcData[i],srcData[i+1],srcData[i+2]];};
+    for(let y=0;y<h;y++){let x=0;while(x<w){if(md[(y*w+x)*4+3]<128){x++;continue;}let e=x;while(e<w&&md[(y*w+e)*4+3]>=128)e++;
+      const L=px(Math.max(0,x0+x-1),y0+y),R=px(Math.min(nw-1,x0+e),y0+y),n=e-x+1;
+      for(let i=x;i<e;i++){const t=(i-x+1)/n,o=(y*w+i)*4;od[o]=L[0]+(R[0]-L[0])*t;od[o+1]=L[1]+(R[1]-L[1])*t;od[o+2]=L[2]+(R[2]-L[2])*t;od[o+3]=255;}x=e;}}
+    ec.putImageData(out,x0,y0);
+  }
+  function buildLayers(){
+    const cfg=(window.CRANES||{})[key];
+    const nw=img.naturalWidth,nh=img.naturalHeight,s=Math.max(W/nw,H/nh);
+    cover={s,ox:(W-nw*s)/2,oy:(H-nh*s)/2};
+    if(!cfg||reduce){layers=makeLayers(img);cranes=null;return;}
+    try{
+      const er=document.createElement('canvas');er.width=nw;er.height=nh;const ec=er.getContext('2d');ec.drawImage(img,0,0);
+      let srcData=null;
+      const fills=[];cfg.forEach(cr=>{(cr.parts||[]).forEach(p=>p.fill&&fills.push(p));(cr.hooks||[]).forEach(h=>h.fill&&fills.push({poly:h.poly,fill:h.fill}));(cr.erase||[]).forEach(e=>fills.push(e));});
+      if(fills.some(f=>f.fill==='interp'))srcData=ec.getImageData(0,0,nw,nh).data;
+      fills.forEach(f=>fillRegion(ec,img,srcData,nw,nh,f));
+      layers=makeLayers(er);
+      const orig=makeLayers(img);
+      // máscara: solo los píxeles que cambian respecto al cielo rellenado (la estructura de la grúa)
+      const mk=document.createElement('canvas');mk.width=nw;mk.height=nh;const mkc=mk.getContext('2d');
+      const oc=document.createElement('canvas');oc.width=nw;oc.height=nh;const occ=oc.getContext('2d');occ.drawImage(img,0,0);
+      cfg.forEach(cr=>[...(cr.parts||[]),...(cr.hooks||[])].forEach(pt=>{
+        const xs=pt.poly.map(q=>q[0]),ys=pt.poly.map(q=>q[1]);
+        const x0=Math.max(0,Math.floor(Math.min(...xs))),y0=Math.max(0,Math.floor(Math.min(...ys))),x1=Math.min(nw,Math.ceil(Math.max(...xs))),y1=Math.min(nh,Math.ceil(Math.max(...ys)));
+        const w=x1-x0,h=y1-y0;if(w<1||h<1)return;
+        const a=occ.getImageData(x0,y0,w,h).data,b=ec.getImageData(x0,y0,w,h).data,m=mkc.getImageData(x0,y0,w,h);
+        for(let i=0;i<a.length;i+=4){const d=Math.max(Math.abs(a[i]-b[i]),Math.abs(a[i+1]-b[i+1]),Math.abs(a[i+2]-b[i+2]));const al=Math.max(0,Math.min(255,(d-14)*9));if(al>m.data[i+3]){m.data[i]=m.data[i+1]=m.data[i+2]=255;m.data[i+3]=al;}}
+        mkc.putImageData(m,x0,y0);}));
+      const maskC=document.createElement('canvas');maskC.width=W;maskC.height=H;maskC.getContext('2d').drawImage(mk,cover.ox,cover.oy,nw*s,nh*s);
+      const toC=([x,y])=>[cover.ox+x*s,cover.oy+y*s];
+      const cut=(pts)=>{const c=pts.map(toC),xs=c.map(p=>p[0]),ys=c.map(p=>p[1]);const bx=Math.floor(Math.min(...xs))-1,by=Math.floor(Math.min(...ys))-1,bw=Math.ceil(Math.max(...xs))-bx+2,bh=Math.ceil(Math.max(...ys))-by+2;const out={bx,by};['color','blue','grey'].forEach(k=>{const cv=document.createElement('canvas');cv.width=Math.max(1,bw);cv.height=Math.max(1,bh);const g=cv.getContext('2d');poly(g,c.map(([x,y])=>[x-bx,y-by]));g.clip();g.drawImage(orig[k],-bx,-by);g.globalCompositeOperation='destination-in';g.drawImage(maskC,-bx,-by);out[k]=cv;});return out;};
+      cranes=cfg.map(cr=>({...cr,cuts:(cr.parts||[]).map(p=>cut(p.poly)),hookCuts:(cr.hooks||[]).map(h=>cut(h.poly))}));
+    }catch(e){layers=makeLayers(img);cranes=null;}
+  }
+  function drawCranes(now){
+    if(!cranes)return;
+    const t=(window.__craneT??now/1000),s=cover.s,C=([x,y])=>[cover.ox+x*s,cover.oy+y*s];
+    const zones={blue:new Path2D(),grey:new Path2D(),color:new Path2D()};
+    for(const tile of tiles){const z=now-tile.build>300?'color':now-tile.frame>225?'grey':'blue';zones[z].rect(tile.x0,tile.y0,tile.w,tile.h);}
+    const lineCol={color:'rgba(38,28,22,.9)',grey:'rgba(40,40,40,.85)',blue:'rgba(140,215,255,.85)'};
+    for(const cr of cranes){
+      const ph=cr.phase||0,wave=(1-Math.cos(t*2*Math.PI/cr.period+ph))/2;
+      // transformación de la pluma (en coordenadas del lienzo)
+      let partT,movePt;
+      if(cr.luff){const [px,py]=C(cr.luff.pivot),a=(cr.luff.deg*Math.PI/180)*(wave-.5)*2,co=Math.cos(a),si=Math.sin(a);
+        partT=c=>{c.translate(px,py);c.rotate(a);c.translate(-px,-py);};
+        movePt=([x,y])=>[px+(x-px)*co-(y-py)*si,py+(x-px)*si+(y-py)*co];}
+      else{const ax=cover.ox+cr.axis*s,k=1-(cr.amp||0)*wave;
+        partT=c=>{c.translate(ax,0);c.scale(k,1);c.translate(-ax,0);};
+        movePt=([x,y])=>[ax+(x-ax)*k,y];}
+      const hookT=(cr.hooks||[]).map(h=>{
+        const anchor=C(h.top||[h.x||0,h.poly[0][1]]),moved=movePt(anchor),dx=moved[0]-anchor[0],dy=moved[1]-anchor[1]+Math.sin(t*2*Math.PI/(cr.period*.55)+ph)*(h.bob??2)*s;
+        const ang=(h.swing||0)*Math.PI/180*Math.sin(t*2*Math.PI/(h.swingPeriod||cr.period*.5)+ph*1.7),tx=anchor[0]+dx,ty=anchor[1]+dy;
+        const apply=c=>{c.translate(tx,ty);c.rotate(ang);c.translate(-anchor[0],-anchor[1]);};
+        const pt=([x,y])=>{const rx=x-anchor[0],ry=y-anchor[1];return [tx+rx*Math.cos(ang)-ry*Math.sin(ang),ty+rx*Math.sin(ang)+ry*Math.cos(ang)];};
+        return {apply,pt};});
+      for(const z of ['blue','grey','color']){
+        ctx.save();ctx.clip(zones[z]);
+        cr.cuts.forEach(c=>{ctx.save();partT(ctx);ctx.drawImage(c[z],c.bx,c.by);ctx.restore();});
+        (cr.hooks||[]).forEach((h,i)=>{
+          const c=cr.hookCuts[i],T=hookT[i];
+          ctx.save();T.apply(ctx);ctx.drawImage(c[z],c.bx,c.by);ctx.restore();
+          if(h.anchors){const [hx,hy]=T.pt(C(h.from));ctx.strokeStyle=lineCol[z];ctx.lineWidth=Math.max(1,1.6*s);ctx.beginPath();h.anchors.forEach(a=>{const [ax,ay]=C(a);ctx.moveTo(hx,hy);ctx.lineTo(ax,ay);});ctx.stroke();}
+        });
+        ctx.restore();
+      }
+      if(cr.light){const [x,y]=movePt(C(cr.light)),on=Math.sin(t*4+ph*3)>.2;if(on){const g=ctx.createRadialGradient(x,y,0,x,y,7*dpr);g.addColorStop(0,'rgba(255,70,50,.95)');g.addColorStop(1,'rgba(255,70,50,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,7*dpr,0,7);ctx.fill();}}
+    }
+  }
+
   function buildTiles(){
     const cell=46*dpr;cols=Math.max(8,Math.round(W/cell));rows=Math.max(5,Math.round(H/cell));
     const r=rand(key.split('').reduce((n,c)=>n*31+c.charCodeAt(0),7));
@@ -122,6 +208,7 @@ const Scene=(()=>{
     if(!finished&&framed<tiles.length){
       const front=tiles.slice(built,framed);if(front.length){const top=Math.min(...front.map(x=>x.y0));ctx.fillStyle='rgba(242,190,92,.08)';ctx.fillRect(0,top,W,2*dpr);}
     }
+    drawCranes(now);
     // partículas: chispas de soldadura y polvo
     for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.life+=16;p.x+=p.vx;p.y+=p.vy;p.vy+=(p.kind==='dust'?.01:.09)*dpr;const k=1-p.life/p.max;if(k<=0){particles.splice(i,1);continue;}ctx.fillStyle=p.kind==='dust'?`rgba(220,205,180,${k*.35})`:`rgba(255,${190+Math.random()*60|0},90,${k})`;const r=(p.kind==='dust'?3.5:1.4)*dpr*(p.kind==='dust'?1.6-k:1);ctx.beginPath();ctx.arc(p.x,p.y,r,0,7);ctx.fill();}
     // destello final al terminar el edificio
