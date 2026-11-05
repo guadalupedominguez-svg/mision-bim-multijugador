@@ -113,3 +113,12 @@ body.in-game header{display:none}
   body:not(.in-game) #entryMessage{margin:0;min-height:0}
   body:not(.in-game) #message{display:none}
 }
+.entry-lead{max-width:none}
+#entry label{position:relative}
+.name-warn{margin:0;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:8px;background:#4a2a14;border:1px solid #f0a35e;color:#ffd9b0;font-size:.88rem;font-weight:600}
+.name-warn::before{content:"!";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#f0a35e;color:#2a1608;font-weight:900;font-size:.75rem}
+.name-warn.shake{animation:warnShake .35s ease}
+@keyframes warnShake{20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+@media(prefers-reduced-motion:reduce){.name-warn.shake{animation:none}}
+#entry label .name-warn{position:absolute;right:8px;bottom:6px;margin:0}
+#entry label .name-warn[hidden]{display:none}

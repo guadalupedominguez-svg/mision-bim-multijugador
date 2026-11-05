@@ -306,7 +306,8 @@ $('start').onclick=start;
 $('name').addEventListener('keydown',e=>{if(e.key==='Enter')start();});
 // solo letras (con acentos y ñ) y espacios simples
 const NAME_OK=/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]/g;
-$('name').addEventListener('input',e=>{const el=e.target,before=el.value,clean=before.replace(NAME_OK,'').replace(/ {2,}/g,' ').replace(/^ /,'');if(clean!==before){const pos=Math.max(0,(el.selectionStart||0)-(before.length-clean.length));el.value=clean;el.setSelectionRange(pos,pos);msg('El nombre solo admite letras y espacios.');}else if($('entryMessage').textContent.startsWith('El nombre solo'))msg('');});
+$('name').addEventListener('input',e=>{const el=e.target,before=el.value,clean=before.replace(NAME_OK,'').replace(/ {2,}/g,' ').replace(/^ /,'');if(clean!==before){const pos=Math.max(0,(el.selectionStart||0)-(before.length-clean.length));el.value=clean;el.setSelectionRange(pos,pos);if(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]/.test(before))warnName();}});
+let warnTimer=null;function warnName(){const w=$('nameWarn');w.hidden=false;w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake');clearTimeout(warnTimer);warnTimer=setTimeout(()=>{w.hidden=true;},3500);}
 document.addEventListener('keydown',e=>{if(!state||state.finished||e.target.tagName==='INPUT')return;const i='abc'.indexOf(e.key.toLowerCase());const b=document.querySelector(`[data-choice="${i}"]`);if(i>=0&&b&&!b.disabled)b.click();});
 init();
 setInterval(clock,250);
