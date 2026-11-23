@@ -2,12 +2,12 @@
 // Los índices internos conservan la misma regla de retrabajo para todos los avatares.
 const elements = {
   gol: ['planos de vestidores','ruta de acceso de jugadores','nueva distribución de vestidores','butacas y pantallas','equipos del estadio'],
-  yardas: ['planos del acceso de público','rutas de evacuación','montaje de gradas','señalización y butacas','sistemas del estadio'],
-  pista: ['planos del área de servicio','ruta de servicio','montaje de pantallas','soportes y pantallas','equipos del estadio'],
+  yardas: ['planos del acceso de público','área de regaderas','montaje de gradas','señalización y butacas','sistemas del estadio'],
+  pista: ['planos del área de servicio','ruta de servicio','Instalaciones en la misma zona','cortinas y vanos','equipos del estadio'],
   guardian: ['mapa de la torre','ruta de energía','nuevo recorrido','ventanas de la torre','sistemas de la torre'],
-  magia: ['pergaminos de la academia','conducto encantado','pasaje nuevo','ventanas de la torre','salas de la academia'],
-  rosa: ['bocetos de la casa','ruta de iluminación','nueva ubicación','ventanas de la casa','equipos de la casa'],
-  samurai: ['planos del dojo','ruta del conducto','camino alternativo','paneles del dojo','sistemas del dojo'],
+  magia: ['pergaminos de la academia','ducto encantado','nueva instalación','ventanas de la torre','salas de la academia'],
+  rosa: ['bocetos de la casa','ruta de iluminación','nueva ubicación','puertas de la casa','equipos de la casa'],
+  samurai: ['planos del salón','ruta del ducto','camino alternativo','paneles del dojo','ubicación de blancos'],
   cosmos: ['mapas de la base','tubería de oxígeno','ruta del cable','ventanas de observación','equipos de la base'],
   bloques: ['instrucciones de ensamble','pieza de instalaciones','módulo alternativo','piezas de fachada','módulos de la ciudad']
 };
