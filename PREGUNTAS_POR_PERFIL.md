@@ -417,7 +417,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Construcción replantea dos veces y ajusta trabajos ya preparados.
 
-### 2. El conducto encantado
+### 2. El ducto encantado
 
 **Pregunta:** Un ducto de HVAC atraviesa una viga de la academia. El montaje empieza esta tarde.
 
@@ -611,7 +611,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Construcción replantea dos veces y ajusta trabajos ya preparados.
 
-### 2. La viga y el conducto
+### 2. La viga y el ducto
 
 **Pregunta:** Un ducto atraviesa la viga que sostiene el techo del dojo. El montaje empieza esta tarde.
 

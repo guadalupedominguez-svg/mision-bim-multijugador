@@ -9,9 +9,9 @@ const avatarTitles = {
   yardas:['El playbook de obra','La ruta hacia la zona de anotación','Cambio de jugada en las gradas','La ventana de fabricación','El marcador final'],
   pista:['La estrategia del team principal','Entrada a boxes','Una parada anticipada','Piezas contra reloj','Bandera a cuadros'],
   guardian:['Dos mapas de la ciudad','La energía de la torre','Una ruta urgente','Ventanas de la torre','El relevo del guardián'],
-  magia:['Los dos pergaminos','El conducto encantado','El pasaje secreto','El cambio del consejo','Abrir la academia'],
+  magia:['Los dos pergaminos','El ducto encantado','El pasaje secreto','El cambio del consejo','Abrir la academia'],
   rosa:['Dos bocetos de la casa','La iluminación','Un cambio vistoso','Ventanas a medida','La casa terminada'],
-  samurai:['El plano del dojo','La viga y el conducto','El camino más corto','Los paneles nuevos','El siguiente maestro'],
+  samurai:['El plano del dojo','La viga y el ducto','El camino más corto','Los paneles nuevos','El siguiente maestro'],
   cosmos:['Coordenadas de lanzamiento','Oxígeno y estructura','El cable más corto','Ventanas de observación','El relevo de tripulación'],
   bloques:['Instrucciones de ensamble','Una pieza que no encaja','El módulo más rápido','Ventanas de bloques','El manual final']
 };
