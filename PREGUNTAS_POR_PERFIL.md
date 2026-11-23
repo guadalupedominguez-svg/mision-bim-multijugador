@@ -31,7 +31,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 2. El acceso a vestidores
 
-**Pregunta:** Una instalación choca con el acceso de jugadores. El montaje empieza esta tarde.
+**Pregunta:** Una bajante sanitaria queda al centro del acceso de jugadores. El montaje empieza esta tarde.
 
 **A.** Aparto la zona de «ruta de acceso de jugadores», coordino a ambas especialidades y libero el resto.
 
@@ -50,7 +50,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. Una nueva alineación de espacios
 
-**Pregunta:** Quieres mover los vestidores, pero esa zona ya tiene cuadrillas asignadas. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Quieres modificar la posición de los vestidores, pero esa zona ya tiene cuadrillas asignadas. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «nueva distribución de vestidores» hasta reunir a todas las especialidades.
 
@@ -88,7 +88,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. La entrega del estadio
 
-**Pregunta:** Abre el estadio. Operación necesita saber dónde quedó cada equipo. La fecha de entrega es fija.
+**Pregunta:** El estadio está por abrir. Operación necesita saber dónde quedó cada equipo de sonido instalado. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «equipos del estadio» y los vinculo al registro final.
 
@@ -128,26 +128,26 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 2. La ruta hacia la zona de anotación
 
-**Pregunta:** Una ruta de evacuación cruza el espacio de otra especialidad. El montaje empieza esta tarde.
+**Pregunta:** Una columna invade el espacio de la regadera. El montaje empieza esta tarde.
 
-**A.** Aparto la zona de «rutas de evacuación», coordino a ambas especialidades y libero el resto.
+**A.** Aparto la zona de «área de regaderas», coordino a ambas especialidades y libero el resto.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** Obra recibe una ruta coordinada y puede instalar sin correcciones.
 
-**B.** Autorizo un tramo de «rutas de evacuación» hasta un punto de espera; la ruta final se confirma después.
+**B.** Autorizo un tramo de «área de regaderas» hasta un punto de espera; la ruta final se confirma después.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** Obra debe verificar en campo qué versión corresponde.
 
-**C.** Dejo que el equipo ajuste «rutas de evacuación» en el montaje y lo documento al final.
+**C.** Dejo que el equipo ajuste «área de regaderas» en el montaje y lo documento al final.
 
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Obra detiene la instalación y modifica trabajo preparado.
 
 ### 3. Cambio de jugada en las gradas
 
-**Pregunta:** Puedes abrir antes unas gradas, pero cambia el montaje de otro equipo. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Puedes entregar antes una sección de gradas, pero cambia el montaje de otro equipo. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «montaje de gradas» hasta reunir a todas las especialidades.
 
@@ -166,7 +166,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 4. La ventana de fabricación
 
-**Pregunta:** El proveedor de butacas pide las medidas finales. El proveedor necesita la orden hoy.
+**Pregunta:** El proveedor de butacas pide la cantidad final de butacas por colores para respetar los tiempos de entrega. El proveedor necesita la orden hoy.
 
 **A.** Congelo solo las piezas de «señalización y butacas» que cambian, confirmo medidas y libero versión nueva.
 
@@ -185,7 +185,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. El marcador final
 
-**Pregunta:** Abre el estadio. Operación necesita ubicar equipos y cambios. La fecha de entrega es fija.
+**Pregunta:** Abre el estadio. Operación necesita el modelo con los cambios de último momento. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «sistemas del estadio» y los vinculo al registro final.
 
@@ -225,7 +225,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 2. Entrada a boxes
 
-**Pregunta:** Unas instalaciones cruzan el acceso de servicio. El montaje empieza esta tarde.
+**Pregunta:** La entrada a boxes se ve obstruida por un par de registros. El montaje empieza esta tarde.
 
 **A.** Aparto la zona de «ruta de servicio», coordino a ambas especialidades y libero el resto.
 
@@ -244,45 +244,45 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. Una parada anticipada
 
-**Pregunta:** Puedes adelantar las pantallas, pero ocupas el espacio de otra instalación. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Puedes adelantar la instalación de V y D, pero ocupas el espacio para cerrar el montaje de HVAC. Las cuadrillas esperan tu instrucción.
 
-**A.** Detengo todo el frente de «montaje de pantallas» hasta reunir a todas las especialidades.
+**A.** Detengo todo el frente de «instalaciones en la misma zona» hasta reunir a todas las especialidades.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** La revisión general detiene el frente y obliga a repetir la preparación del montaje. Diseño recibe una ruta verificada.
 
-**B.** Pruebo «montaje de pantallas» en un tramo pequeño y reversible; confirmo antes de extenderlo.
+**B.** Pruebo «instalaciones en la misma zona» en un tramo pequeño y reversible; confirmo antes de extenderlo.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** La prueba limitada confirma la nueva ruta antes de extenderla. Diseño recibe una decisión verificada sin detener los demás frentes.
 
-**C.** Hago «montaje de pantallas» en todo el frente y aviso en el reporte del día.
+**C.** Hago «instalaciones en la misma zona» en todo el frente y aviso en el reporte del día.
 
 - **Retrabajo base:** 2
 - **Consecuencia en la obra:** Diseño descubre el cambio cuando otra especialidad necesita ese espacio.
 
 ### 4. Piezas contra reloj
 
-**Pregunta:** El fabricante pide medidas finales de pantallas; falta un dato de campo. El proveedor necesita la orden hoy.
+**Pregunta:** El fabricante pide medidas finales de las cortinas para el paddock; falta validar los vanos con construcción. El proveedor necesita la orden hoy.
 
-**A.** Congelo solo las piezas de «soportes y pantallas» que cambian, confirmo medidas y libero versión nueva.
+**A.** Congelo solo las piezas de «cortinas y vanos» que cambian, confirmo medidas y libero versión nueva.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** Obra recibe medidas consistentes antes de fabricar.
 
-**B.** Fabrico las piezas de «soportes y pantallas» que no cambian; el resto espera verificación mañana.
+**B.** Fabrico las piezas de «cortinas y vanos» que no cambian; el resto espera verificación mañana.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** Obra debe conciliar documentos de distintas versiones.
 
-**C.** Confirmo «soportes y pantallas» por llamada y actualizo los documentos cuando lleguen las piezas.
+**C.** Confirmo «cortinas y vanos» por llamada y actualizo los documentos cuando lleguen las piezas.
 
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Llegan componentes con medidas anteriores y se modifican.
 
 ### 5. Bandera a cuadros
 
-**Pregunta:** Cruzas la meta. El equipo de operación necesita saber qué cambió. La fecha de entrega es fija.
+**Pregunta:** Previo al inicio de las pruebas libres. El equipo de operación necesita saber qué circuito controla las luces de arrancada. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «equipos del estadio» y los vinculo al registro final.
 
@@ -303,7 +303,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 1. Dos mapas de la ciudad
 
-**Pregunta:** Dos mapas ubican la base de tu torre en puntos distintos. Una revisión completa detendría la obra hoy.
+**Pregunta:** Dos planos ubican la acometida eléctrica de tu torre en puntos distintos. Una revisión completa detendría la obra hoy.
 
 **A.** Reviso solo la zona en conflicto de «mapa de la torre» con ambos responsables y emito una versión común.
 
@@ -341,7 +341,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. Una ruta urgente
 
-**Pregunta:** Mover un conducto ahorra tiempo, pero otro equipo usa ese espacio. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Mover un ducto ahorra tiempo y genera valor, pero otro equipo usa ese espacio. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «nuevo recorrido» hasta reunir a todas las especialidades.
 
@@ -360,7 +360,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 4. Ventanas de la torre
 
-**Pregunta:** La ciudad cambia las ventanas justo antes de fabricarlas. El proveedor necesita la orden hoy.
+**Pregunta:** El material de las ventanas cambia justo antes de fabricarlas. El proveedor necesita la orden hoy.
 
 **A.** Congelo solo las piezas de «ventanas de la torre» que cambian, confirmo medidas y libero versión nueva.
 
@@ -379,7 +379,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. El relevo del guardián
 
-**Pregunta:** La torre está lista. El siguiente guardián debe conocer sus sistemas. La fecha de entrega es fija.
+**Pregunta:** La torre está lista. El siguiente guardián debe conocer sus sistemas para programar el mantenimiento. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «sistemas de la torre» y los vinculo al registro final.
 
@@ -419,38 +419,38 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 2. El conducto encantado
 
-**Pregunta:** Un conducto mágico atraviesa una viga de la academia. El montaje empieza esta tarde.
+**Pregunta:** Un ducto de HVAC atraviesa una viga de la academia. El montaje empieza esta tarde.
 
-**A.** Aparto la zona de «conducto encantado», coordino a ambas especialidades y libero el resto.
+**A.** Aparto la zona de «ducto encantado», coordino a ambas especialidades y libero el resto.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** Obra recibe una ruta coordinada y puede instalar sin correcciones.
 
-**B.** Autorizo un tramo de «conducto encantado» hasta un punto de espera; la ruta final se confirma después.
+**B.** Autorizo un tramo de «ducto encantado» hasta un punto de espera; la ruta final se confirma después.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** Obra debe verificar en campo qué versión corresponde.
 
-**C.** Dejo que el equipo ajuste «conducto encantado» en el montaje y lo documento al final.
+**C.** Dejo que el equipo ajuste «ducto encantado» en el montaje y lo documento al final.
 
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Obra detiene la instalación y modifica trabajo preparado.
 
 ### 3. El pasaje secreto
 
-**Pregunta:** Hallas un pasaje más corto, pero ocupa el espacio de otra sala. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Encuentras espacio para colocar las cámaras de calor que no estaban consideradas en el alcance, pero el espacio ya está ocupado por los detectores de pociones. Las cuadrillas esperan tu instrucción.
 
-**A.** Detengo todo el frente de «pasaje nuevo» hasta reunir a todas las especialidades.
+**A.** Detengo todo el frente de «nueva instalación» hasta reunir a todas las especialidades.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** La revisión general detiene el frente y obliga a repetir la preparación del montaje. Diseño recibe una ruta verificada.
 
-**B.** Pruebo «pasaje nuevo» en un tramo pequeño y reversible; confirmo antes de extenderlo.
+**B.** Pruebo «nueva instalación» en un tramo pequeño y reversible; confirmo antes de extenderlo.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** La prueba limitada confirma la nueva ruta antes de extenderla. Diseño recibe una decisión verificada sin detener los demás frentes.
 
-**C.** Hago «pasaje nuevo» en todo el frente y aviso en el reporte del día.
+**C.** Hago «nueva instalación» en todo el frente y aviso en el reporte del día.
 
 - **Retrabajo base:** 2
 - **Consecuencia en la obra:** Diseño descubre el cambio cuando otra especialidad necesita ese espacio.
@@ -535,7 +535,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. Un cambio vistoso
 
-**Pregunta:** Hay un lugar más vistoso para una instalación, pero otra especialidad lo necesita. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Hay un lugar más factible para una instalación, pero otra especialidad lo necesita. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «nueva ubicación» hasta reunir a todas las especialidades.
 
@@ -554,26 +554,26 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 4. Ventanas a medida
 
-**Pregunta:** Cambias el tamaño de las ventanas cuando ya se van a fabricar. El proveedor necesita la orden hoy.
+**Pregunta:** Cambias el diseño de las puertas cuando ya se van a fabricar. El proveedor necesita la orden hoy.
 
-**A.** Congelo solo las piezas de «ventanas de la casa» que cambian, confirmo medidas y libero versión nueva.
+**A.** Congelo solo las piezas de «puertas de la casa» que cambian, confirmo medidas y libero versión nueva.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** Obra recibe medidas consistentes antes de fabricar.
 
-**B.** Fabrico las piezas de «ventanas de la casa» que no cambian; el resto espera verificación mañana.
+**B.** Fabrico las piezas de «puertas de la casa» que no cambian; el resto espera verificación mañana.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** Obra debe conciliar documentos de distintas versiones.
 
-**C.** Confirmo «ventanas de la casa» por llamada y actualizo los documentos cuando lleguen las piezas.
+**C.** Confirmo «puertas de la casa» por llamada y actualizo los documentos cuando lleguen las piezas.
 
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Llegan componentes con medidas anteriores y se modifican.
 
 ### 5. La casa terminada
 
-**Pregunta:** La casa está lista. Quien la opere necesitará ubicar sus equipos. La fecha de entrega es fija.
+**Pregunta:** La casa está lista. Quien la habite necesitará ubicar la posición de las válvulas de los servicios. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «equipos de la casa» y los vinculo al registro final.
 
@@ -594,45 +594,45 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 1. El plano del dojo
 
-**Pregunta:** Dos planos ubican el pilar central del dojo en posiciones distintas. Una revisión completa detendría la obra hoy.
+**Pregunta:** Dos planos ubican la viga central del salón de sellos manuales en posiciones distintas. Una revisión completa detendría la obra hoy.
 
-**A.** Reviso solo la zona en conflicto de «planos del dojo» con ambos responsables y emito una versión común.
+**A.** Reviso solo la zona en conflicto de «planos del salón» con ambos responsables y emito una versión común.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** Construcción recibe una referencia única y puede replantear la columna.
 
-**B.** Libero «planos del dojo» con una condición: verificar antes de ejecutar la parte afectada.
+**B.** Libero «planos del salón» con una condición: verificar antes de ejecutar la parte afectada.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** Construcción debe confirmar la posición antes de ejecutar.
 
-**C.** Uso la versión más reciente de «planos del dojo» y dejo la diferencia para mañana.
+**C.** Uso la versión más reciente de «planos del salón» y dejo la diferencia para mañana.
 
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Construcción replantea dos veces y ajusta trabajos ya preparados.
 
 ### 2. La viga y el conducto
 
-**Pregunta:** Un conducto atraviesa la viga que sostiene el techo. El montaje empieza esta tarde.
+**Pregunta:** Un ducto atraviesa la viga que sostiene el techo del dojo. El montaje empieza esta tarde.
 
-**A.** Aparto la zona de «ruta del conducto», coordino a ambas especialidades y libero el resto.
+**A.** Aparto la zona de «ruta del ducto», coordino a ambas especialidades y libero el resto.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** Obra recibe una ruta coordinada y puede instalar sin correcciones.
 
-**B.** Autorizo un tramo de «ruta del conducto» hasta un punto de espera; la ruta final se confirma después.
+**B.** Autorizo un tramo de «ruta del ducto» hasta un punto de espera; la ruta final se confirma después.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** Obra debe verificar en campo qué versión corresponde.
 
-**C.** Dejo que el equipo ajuste «ruta del conducto» en el montaje y lo documento al final.
+**C.** Dejo que el equipo ajuste «ruta del ducto» en el montaje y lo documento al final.
 
 - **Retrabajo base:** 3
 - **Consecuencia en la obra:** Obra detiene la instalación y modifica trabajo preparado.
 
 ### 3. El camino más corto
 
-**Pregunta:** Hay un camino más corto para los servicios, pero invade el área de entrenamiento. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Se comienza con la instalación de las paredes acolchadas del salón de ninjutsu, pero se descubre que se puede mejorar la trayectoria de la red de audio que queda detrás de las paredes. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «camino alternativo» hasta reunir a todas las especialidades.
 
@@ -651,7 +651,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 4. Los paneles nuevos
 
-**Pregunta:** La escuela cambia las ventanas antes de fabricar los paneles. El proveedor necesita la orden hoy.
+**Pregunta:** La escuela cambia algunos diseños de los paneles antes de fabricarlos. El proveedor necesita la orden hoy.
 
 **A.** Congelo solo las piezas de «paneles del dojo» que cambian, confirmo medidas y libero versión nueva.
 
@@ -670,19 +670,19 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. El siguiente maestro
 
-**Pregunta:** El dojo abre. El siguiente maestro necesita saber dónde quedó cada sistema. La fecha de entrega es fija.
+**Pregunta:** El siguiente maestro necesita saber la ubicación de blancos para practicar su lanzamiento de kunáis. La fecha de entrega es fija.
 
-**A.** Verifico los elementos críticos de «sistemas del dojo» y los vinculo al registro final.
+**A.** Verifico los elementos críticos de «ubicación de blancos» y los vinculo al registro final.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** Operación recibe información localizable y confiable.
 
-**B.** Entrego «sistemas del dojo» con fotos y una lista de pendientes por conciliar.
+**B.** Entrego «ubicación de blancos» con fotos y una lista de pendientes por conciliar.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** Operación debe relacionar los documentos manualmente.
 
-**C.** Entrego los últimos planos aprobados de «sistemas del dojo» y atiendo diferencias después.
+**C.** Entrego los últimos planos aprobados de «ubicación de blancos» y atiendo diferencias después.
 
 - **Retrabajo base:** 2
 - **Consecuencia en la obra:** Operación reconstruye información al necesitar cada equipo.
@@ -691,7 +691,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 1. Coordenadas de lanzamiento
 
-**Pregunta:** Dos mapas ubican el soporte de lanzamiento en lugares distintos. Una revisión completa detendría la obra hoy.
+**Pregunta:** Dos mapas ubican la plataforma de lanzamiento en lugares distintos. Una revisión completa detendría la obra hoy.
 
 **A.** Reviso solo la zona en conflicto de «mapas de la base» con ambos responsables y emito una versión común.
 
@@ -729,7 +729,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. El cable más corto
 
-**Pregunta:** Hay una ruta más corta para un cable, pero otro módulo la usará. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Hay una ruta más corta para un cable eléctrico, pero la usarán voz y datos. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «ruta del cable» hasta reunir a todas las especialidades.
 
@@ -748,7 +748,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 4. Ventanas de observación
 
-**Pregunta:** Cambian las ventanas de observación justo antes de fabricarlas. El proveedor necesita la orden hoy.
+**Pregunta:** Cambian las escotillas de acceso justo antes de fabricarlas. El proveedor necesita la orden hoy.
 
 **A.** Congelo solo las piezas de «ventanas de observación» que cambian, confirmo medidas y libero versión nueva.
 
@@ -767,7 +767,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. El relevo de tripulación
 
-**Pregunta:** La base entra en operación. La nueva tripulación debe ubicar equipos y cambios. La fecha de entrega es fija.
+**Pregunta:** La base entra en operación. La nueva tripulación debe ubicar las válvulas de presurización. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «equipos de la base» y los vinculo al registro final.
 
@@ -788,7 +788,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 1. Instrucciones de ensamble
 
-**Pregunta:** Dos instrucciones ponen el mismo soporte en posiciones distintas. Una revisión completa detendría la obra hoy.
+**Pregunta:** Dos instrucciones marcan la misma pieza en posiciones distintas. Una revisión completa detendría la obra hoy.
 
 **A.** Reviso solo la zona en conflicto de «instrucciones de ensamble» con ambos responsables y emito una versión común.
 
@@ -807,7 +807,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 2. Una pieza que no encaja
 
-**Pregunta:** Una pieza de instalaciones no encaja: atraviesa una viga. El montaje empieza esta tarde.
+**Pregunta:** El cabezal de la red contraincendios no encaja: atraviesa una viga. El montaje empieza esta tarde.
 
 **A.** Aparto la zona de «pieza de instalaciones», coordino a ambas especialidades y libero el resto.
 
@@ -845,7 +845,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 4. Ventanas de bloques
 
-**Pregunta:** El cliente quiere ventanas más grandes cuando la fachada ya está separada. El proveedor necesita la orden hoy.
+**Pregunta:** El cliente quiere ventanas más grandes cuando la fachada ya está en proceso de fabricación. El proveedor necesita la orden hoy.
 
 **A.** Congelo solo las piezas de «piezas de fachada» que cambian, confirmo medidas y libero versión nueva.
 
@@ -864,7 +864,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. El manual final
 
-**Pregunta:** La ciudad está lista. Alguien más tendrá que mantenerla o ampliarla. La fecha de entrega es fija.
+**Pregunta:** La ciudad está lista. Alguien más tendrá que saber dónde continuar la segunda etapa. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «módulos de la ciudad» y los vinculo al registro final.
 
