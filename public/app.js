@@ -24,11 +24,11 @@ function animSrc(p){return '/'+p;}
 const Scene=(()=>{
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let box,canvas,ctx,img,key=null,W=0,H=0,dpr=1,layers=null,tiles=[],cols=0,rows=0;
-  let progress=0,total=5,finished=false,accent='#f2d59e',built=0,framed=0,celebrate=0,particles=[],ro=null,running=false,born=0;
+  let outcome=[],marked={},progress=0,total=5,finished=false,accent='#f2d59e',built=0,framed=0,celebrate=0,particles=[],ro=null,running=false,born=0;
   const ease=t=>t<=0?0:t>=1?1:1-Math.pow(1-t,3);
   const rand=seed=>{let x=seed>>>0||1;return()=>((x=(x*1664525+1013904223)>>>0)/4294967296);};
-  function mount(container,a,p,t,done){
-    total=t;finished=done;accent=a.color||accent;
+  function mount(container,a,p,t,done,hist){
+    total=t;finished=done;accent=a.color||accent;outcome=(hist||[]).map(h=>({rw:!!(h.rw||h.work),work:h.work}));
     if(key!==a.id||!canvas||!container.contains(canvas)){
       key=a.id;box=container;container.querySelector('canvas')?.remove();
       canvas=document.createElement('canvas');canvas.className='scene-canvas';canvas.setAttribute('aria-hidden','true');container.prepend(canvas);
@@ -131,7 +131,7 @@ const Scene=(()=>{
     const C=new DOMMatrix().translate(ox,oy).scale(s),Ci=C.inverse();
     const {out}=pieceMatrices(t);
     const zones={blue:new Path2D(),grey:new Path2D(),color:new Path2D()},used={blue:0,grey:0,color:0};
-    for(const tile of tiles){const z=now-tile.build>300?'color':now-tile.frame>225?'grey':'blue';zones[z].rect(tile.x0,tile.y0,tile.w,tile.h);used[z]++;}
+    for(const tile of tiles){const z=buildAlpha(tile,now)>.5?'color':now-tile.frame>225?'grey':'blue';zones[z].rect(tile.x0,tile.y0,tile.w,tile.h);used[z]++;}
     const lineCol={color:'rgba(38,28,22,.9)',grey:'rgba(40,40,40,.85)',blue:'rgba(140,215,255,.85)'};
     for(const z of ['blue','grey','color']){
       if(!used[z])continue;
@@ -163,6 +163,7 @@ const Scene=(()=>{
     }
     tiles.sort((a,b)=>a.rank-b.rank);
     if(prev.length){built=framed=0;}
+    marked={};
   }
   function set(p,instant){
     progress=p;if(!tiles.length)return;
@@ -173,6 +174,37 @@ const Scene=(()=>{
     const span=(from,to)=>Math.max(1,to-from);
     if(targetFrame>framed){const k=span(framed,targetFrame),step=quick?(instant&&!reduce?Math.min(6,900/k):0):Math.min(28,1100/k);for(let i=framed;i<targetFrame;i++)tiles[i].frame=(quick&&!instant?now-1e4:first)+(i-framed)*step;framed=targetFrame;}
     if(targetBuilt>built){const k=span(built,targetBuilt),step=quick?(instant&&!reduce?Math.min(6,900/k):0):Math.min(40,2200/k);const base=quick?first:now+700;for(let i=built;i<targetBuilt;i++)tiles[i].build=(quick&&!instant?now-1e4:base)+(i-built)*step;built=targetBuilt;if(finished&&!quick)celebrate=base+k*step+300;}
+    applyRework(instant||reduce,now);
+  }
+  // ---- Retrabajo en la escena: demolición y rehacer ----
+  // Durante el juego: si la decisión generó retrabajo, una parte pequeña de esa etapa se cae y se vuelve a construir.
+  // Al terminar: en cada etapa con retrabajo se cae una parte proporcional y se queda en obra gris, rehaciéndose.
+  // Sin retrabajo en todo el proyecto, la obra queda completa y con el destello final.
+  function stageTiles(k){const N=tiles.length,a=Math.round(N*k/total),b=Math.round(N*(k+1)/total),idx=[];for(let i=a;i<b;i++)idx.push(i);
+    // ordenadas por cercanía a un punto de la etapa: lo que se rehace forma una zona continua, no casillas sueltas
+    const r=rand((key||'x').length*97+k*131+7);if(!idx.length)return idx;const c=tiles[idx[Math.floor(r()*idx.length)]],cx=c.x0+c.w/2,cy=c.y0+c.h/2;
+    const d=new Map(idx.map(i=>{const t=tiles[i];return [i,Math.hypot((t.x0+t.w/2-cx)/t.w,(t.y0+t.h/2-cy)/t.h)+r()*.9];}));
+    return idx.sort((a,b)=>d.get(a)-d.get(b));}
+  function applyRework(quick,now){
+    if(!tiles.length)return;
+    if(finished){
+      let any=false;
+      outcome.forEach((o,k)=>{const w=o.work||0;if(!w)return;any=true;if(marked['f'+k])return;marked['f'+k]=1;
+        const idx=stageTiles(k),n=Math.max(1,Math.round(idx.length*Math.min(.9,.22*w)));
+        idx.slice(0,n).forEach((ti,j)=>{const tl=tiles[ti];tl.rebuildAt=Infinity;tl.fellDust=false;
+          tl.fallAt=quick?-1e9:Math.max(now+2600,(isFinite(tl.build)?tl.build:now)+900)+j*45+k*260;});});
+      if(any)celebrate=0;
+      return;
+    }
+    const k=progress-1,o=outcome[k];
+    if(k<0||!o||!o.rw||marked['s'+k])return;marked['s'+k]=1;
+    if(quick)return; // al recargar la página no se repite la señal
+    const idx=stageTiles(k),n=Math.max(2,Math.round(idx.length*.18));
+    idx.slice(0,n).forEach((ti,j)=>{const tl=tiles[ti];tl.fellDust=false;tl.fallAt=(isFinite(tl.build)?tl.build:now)+1500+j*70;tl.rebuildAt=tl.fallAt+2600;});
+  }
+  function buildAlpha(tile,now){
+    if(tile.fallAt!=null&&now>=tile.fallAt)return now>=tile.rebuildAt?ease((now-tile.rebuildAt)/700):0;
+    return ease((now-tile.build)/600);
   }
   function slice(src,t,dy,alpha){ctx.globalAlpha=alpha;ctx.drawImage(src,t.x0,t.y0,t.w,t.h,t.x0,t.y0+dy,t.w,t.h);ctx.globalAlpha=1;}
   function spark(x,y,kind){if(reduce||particles.length>220)return;const n=kind==='dust'?5:3;for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-.5)*(kind==='dust'?1.2:2.4)*dpr,vy:-(Math.random()*(kind==='dust'?.6:2.2)+.3)*dpr,life:0,max:kind==='dust'?700:550,kind});}
@@ -189,7 +221,10 @@ const Scene=(()=>{
     ctx.stroke();
     const t=now/1000;
     for(const tile of tiles){
-      const fa=ease((now-tile.frame)/450),ba=ease((now-tile.build)/600);
+      const fa=ease((now-tile.frame)/450),ba=buildAlpha(tile,now);
+      if(tile.fallAt!=null&&now>=tile.fallAt&&now<tile.fallAt+700){const p=(now-tile.fallAt)/700;
+        if(!tile.fellDust){tile.fellDust=true;tile.dusted=false;spark(tile.x0+tile.w/2,tile.y0+tile.h,'dust');spark(tile.x0+tile.w/2,tile.y0+tile.h*.6,'dust');}
+        slice(grey,tile,0,.92);slice(color,tile,p*p*30*dpr,1-p);continue;}
       if(fa>0&&ba<1){
         slice(grey,tile,-(1-fa)*6*dpr,fa*(1-ba)*.92);
         if(ba===0&&fa>=1){
@@ -222,7 +257,7 @@ function drawBuilding(){
   $('projectStage').textContent=`${n} / ${state.total} etapas`;
   if(!$('sceneStage')){$('projectVisual').innerHTML=`<div class="scene-stage" id="sceneStage" role="img"></div>`;}
   $('sceneStage').setAttribute('aria-label',`${a.building}: ${n} de ${state.total} etapas construidas`);
-  Scene.mount($('sceneStage'),a,n,state.total,state.finished);
+  Scene.mount($('sceneStage'),a,n,state.total,state.finished,state.history);
   // barra de avance: se llena conforme se contestan las preguntas, con el nombre de cada etapa debajo
   const pct=100*n/state.total;
   $('projectStatus').style.setProperty('--stages',state.total);
