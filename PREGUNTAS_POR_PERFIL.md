@@ -88,7 +88,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. La entrega del estadio
 
-**Pregunta:** El estadio esta por abrir. Operación necesita saber dónde quedó cada equipo de sonido instalado. La fecha de entrega es fija.
+**Pregunta:** El estadio está por abrir. Operación necesita saber dónde quedó cada equipo de sonido instalado. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «equipos del estadio» y los vinculo al registro final.
 
@@ -246,24 +246,24 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 **Pregunta:** Puedes adelantar la instalación de V y D, pero ocupas el espacio para cerrar el montaje de HVAC. Las cuadrillas esperan tu instrucción.
 
-**A.** Detengo todo el frente de «Instalaciones en la misma zona» hasta reunir a todas las especialidades.
+**A.** Detengo todo el frente de «instalaciones en la misma zona» hasta reunir a todas las especialidades.
 
 - **Retrabajo base:** 1
 - **Consecuencia en la obra:** La revisión general detiene el frente y obliga a repetir la preparación del montaje. Diseño recibe una ruta verificada.
 
-**B.** Pruebo «Instalaciones en la misma zona» en un tramo pequeño y reversible; confirmo antes de extenderlo.
+**B.** Pruebo «instalaciones en la misma zona» en un tramo pequeño y reversible; confirmo antes de extenderlo.
 
 - **Retrabajo base:** 0
 - **Consecuencia en la obra:** La prueba limitada confirma la nueva ruta antes de extenderla. Diseño recibe una decisión verificada sin detener los demás frentes.
 
-**C.** Hago «Instalaciones en la misma zona» en todo el frente y aviso en el reporte del día.
+**C.** Hago «instalaciones en la misma zona» en todo el frente y aviso en el reporte del día.
 
 - **Retrabajo base:** 2
 - **Consecuencia en la obra:** Diseño descubre el cambio cuando otra especialidad necesita ese espacio.
 
 ### 4. Piezas contra reloj
 
-**Pregunta:** El fabricante pide medidas finales de las cortinas para el padock; falta validar los vanos con construcción. El proveedor necesita la orden hoy.
+**Pregunta:** El fabricante pide medidas finales de las cortinas para el paddock; falta validar los vanos con construcción. El proveedor necesita la orden hoy.
 
 **A.** Congelo solo las piezas de «cortinas y vanos» que cambian, confirmo medidas y libero versión nueva.
 
@@ -282,7 +282,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. Bandera a cuadros
 
-**Pregunta:** Previo al inicio de las pruebas libres. El equipo de operación necesita saber que circuito controla las luces de arrancada. La fecha de entrega es fija.
+**Pregunta:** Previo al inicio de las pruebas libres. El equipo de operación necesita saber qué circuito controla las luces de arrancada. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «equipos del estadio» y los vinculo al registro final.
 
@@ -303,7 +303,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 1. Dos mapas de la ciudad
 
-**Pregunta:** Dos planos ubican la acometida electrica de tu torre en puntos distintos. Una revisión completa detendría la obra hoy.
+**Pregunta:** Dos planos ubican la acometida eléctrica de tu torre en puntos distintos. Una revisión completa detendría la obra hoy.
 
 **A.** Reviso solo la zona en conflicto de «mapa de la torre» con ambos responsables y emito una versión común.
 
@@ -438,7 +438,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. El pasaje secreto
 
-**Pregunta:** Encuentras espacio para colocar las cámaras de calor que no estaban consideradas en el alcance, pero el espacio ya esta ocupado por los detectores de pociones Las cuadrillas esperan tu instrucción.
+**Pregunta:** Encuentras espacio para colocar las cámaras de calor que no estaban consideradas en el alcance, pero el espacio ya está ocupado por los detectores de pociones. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «nueva instalación» hasta reunir a todas las especialidades.
 
@@ -632,7 +632,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. El camino más corto
 
-**Pregunta:** Se comienza con la instalación de las paredes acolchadas del salón de ninjutsu, pero descubren que se pude mejorar la trayectoria de la red de audio que queda detrás de las paredes. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Se comienza con la instalación de las paredes acolchadas del salón de ninjutsu, pero se descubre que se puede mejorar la trayectoria de la red de audio que queda detrás de las paredes. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «camino alternativo» hasta reunir a todas las especialidades.
 
@@ -651,7 +651,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 4. Los paneles nuevos
 
-**Pregunta:** La escuela cambia algunos diseños de los paneles antes de fabricar. El proveedor necesita la orden hoy.
+**Pregunta:** La escuela cambia algunos diseños de los paneles antes de fabricarlos. El proveedor necesita la orden hoy.
 
 **A.** Congelo solo las piezas de «paneles del dojo» que cambian, confirmo medidas y libero versión nueva.
 
@@ -670,7 +670,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 5. El siguiente maestro
 
-**Pregunta:** El siguiente maestro aire necesita saber la ubicación de blancos para practicar su lanzamiento de kunáis. La fecha de entrega es fija.
+**Pregunta:** El siguiente maestro necesita saber la ubicación de blancos para practicar su lanzamiento de kunáis. La fecha de entrega es fija.
 
 **A.** Verifico los elementos críticos de «ubicación de blancos» y los vinculo al registro final.
 
@@ -729,7 +729,7 @@ Documento de revisión para el equipo organizador. Contiene las cinco misiones d
 
 ### 3. El cable más corto
 
-**Pregunta:** Hay una ruta más corta para un cable eléctrico, pero la usará voz y datos. Las cuadrillas esperan tu instrucción.
+**Pregunta:** Hay una ruta más corta para un cable eléctrico, pero la usarán voz y datos. Las cuadrillas esperan tu instrucción.
 
 **A.** Detengo todo el frente de «ruta del cable» hasta reunir a todas las especialidades.
 

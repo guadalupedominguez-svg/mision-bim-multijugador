@@ -3,7 +3,7 @@
 const elements = {
   gol: ['planos de vestidores','ruta de acceso de jugadores','nueva distribución de vestidores','butacas y pantallas','equipos del estadio'],
   yardas: ['planos del acceso de público','área de regaderas','montaje de gradas','señalización y butacas','sistemas del estadio'],
-  pista: ['planos del área de servicio','ruta de servicio','Instalaciones en la misma zona','cortinas y vanos','equipos del estadio'],
+  pista: ['planos del área de servicio','ruta de servicio','instalaciones en la misma zona','cortinas y vanos','equipos del estadio'],
   guardian: ['mapa de la torre','ruta de energía','nuevo recorrido','ventanas de la torre','sistemas de la torre'],
   magia: ['pergaminos de la academia','ducto encantado','nueva instalación','ventanas de la torre','salas de la academia'],
   rosa: ['bocetos de la casa','ruta de iluminación','nueva ubicación','puertas de la casa','equipos de la casa'],

@@ -6,7 +6,7 @@ module.exports = {
     ['Una bajante sanitaria queda al centro del acceso de jugadores.', []],
     ['Quieres modificar la posición de los vestidores, pero esa zona ya tiene cuadrillas asignadas.', []],
     ['El proveedor de butacas y pantallas reserva turno, pero faltan medidas por confirmar.', []],
-    ['El estadio esta por abrir. Operación necesita saber dónde quedó cada equipo de sonido instalado.', []]
+    ['El estadio está por abrir. Operación necesita saber dónde quedó cada equipo de sonido instalado.', []]
   ],
   yardas: [
     ['Remodelas un estadio con fecha de entrega. Dos planos muestran distinto un acceso de público.', []],
@@ -19,11 +19,11 @@ module.exports = {
     ['Diriges una remodelación contra reloj. Hay dos versiones de los planos del área de servicio.', []],
     ['La entrada a boxes se ve obstruida por un par de registros.', []],
     ['Puedes adelantar la instalación de V y D, pero ocupas el espacio para cerrar el montaje de HVAC.', []],
-    ['El fabricante pide medidas finales de las cortinas para el padock; falta validar los vanos con construcción.', []],
-    ['Previo al inicio de las pruebas libres. El equipo de operación necesita saber que circuito controla las luces de arrancada.', []]
+    ['El fabricante pide medidas finales de las cortinas para el paddock; falta validar los vanos con construcción.', []],
+    ['Previo al inicio de las pruebas libres. El equipo de operación necesita saber qué circuito controla las luces de arrancada.', []]
   ],
   guardian: [
-    ['Dos planos ubican la acometida electrica de tu torre en puntos distintos.', []],
+    ['Dos planos ubican la acometida eléctrica de tu torre en puntos distintos.', []],
     ['Una ruta de energía atraviesa el núcleo de la torre.', []],
     ['Mover un ducto ahorra tiempo y genera valor, pero otro equipo usa ese espacio.', []],
     ['El material de las ventanas cambia justo antes de fabricarlas.', []],
@@ -32,7 +32,7 @@ module.exports = {
   magia: [
     ['Dos pergaminos ubican la primera columna en lugares distintos.', []],
     ['Un ducto de HVAC atraviesa una viga de la academia.', []],
-    ['Encuentras espacio para colocar las cámaras de calor que no estaban consideradas en el alcance, pero el espacio ya esta ocupado por los detectores de pociones', []],
+    ['Encuentras espacio para colocar las cámaras de calor que no estaban consideradas en el alcance, pero el espacio ya está ocupado por los detectores de pociones.', []],
     ['El consejo cambia las ventanas justo antes de fabricarlas.', []],
     ['La academia abre. La próxima generación debe encontrar equipos y cambios.', []]
   ],
@@ -46,14 +46,14 @@ module.exports = {
   samurai: [
     ['Dos planos ubican la viga central del salón de sellos manuales en posiciones distintas.', []],
     ['Un ducto atraviesa la viga que sostiene el techo del dojo.', []],
-    ['Se comienza con la instalación de las paredes acolchadas del salón de ninjutsu, pero descubren que se pude mejorar la trayectoria de la red de audio que queda detrás de las paredes.', []],
-    ['La escuela cambia algunos diseños de los paneles antes de fabricar.', []],
-    ['El siguiente maestro aire necesita saber la ubicación de blancos para practicar su lanzamiento de kunáis.', []]
+    ['Se comienza con la instalación de las paredes acolchadas del salón de ninjutsu, pero se descubre que se puede mejorar la trayectoria de la red de audio que queda detrás de las paredes.', []],
+    ['La escuela cambia algunos diseños de los paneles antes de fabricarlos.', []],
+    ['El siguiente maestro necesita saber la ubicación de blancos para practicar su lanzamiento de kunáis.', []]
   ],
   cosmos: [
     ['Dos mapas ubican la plataforma de lanzamiento en lugares distintos.', []],
     ['Una tubería de oxígeno atraviesa una viga del módulo principal.', []],
-    ['Hay una ruta más corta para un cable eléctrico, pero la usará voz y datos.', []],
+    ['Hay una ruta más corta para un cable eléctrico, pero la usarán voz y datos.', []],
     ['Cambian las escotillas de acceso justo antes de fabricarlas.', []],
     ['La base entra en operación. La nueva tripulación debe ubicar las válvulas de presurización.', []]
   ],
